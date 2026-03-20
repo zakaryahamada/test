@@ -8,54 +8,61 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;overflow:hidden;height:100vh}
 #app{display:flex;height:100vh}
-
-/* ── Sidebar ── */
-#sidebar{width:300px;min-width:300px;background:linear-gradient(180deg,#1e293b,#0f172a);
-  border-right:1px solid #334155;overflow-y:auto;padding:0 0 24px}
+#sidebar{width:310px;min-width:310px;background:linear-gradient(180deg,#1e293b,#0f172a);
+  border-right:1px solid #334155;overflow-y:auto;padding-bottom:24px;flex-shrink:0}
 #sidebar::-webkit-scrollbar{width:6px}
 #sidebar::-webkit-scrollbar-thumb{background:#475569;border-radius:3px}
-.logo{padding:20px 20px 12px;font-size:18px;font-weight:700;color:#f8fafc;
+.logo{padding:16px 18px 10px;font-size:17px;font-weight:700;color:#f8fafc;
   border-bottom:1px solid #334155;display:flex;align-items:center;gap:8px}
-.logo span{font-size:22px}
-
-.section{border-bottom:1px solid #1e293b}
-.section-header{display:flex;align-items:center;gap:8px;padding:14px 20px 6px;
-  font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;user-select:none}
-.section-header .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.section-body{padding:4px 20px 14px}
-
-.ctrl{margin-bottom:10px}
-.ctrl label{display:block;font-size:12px;color:#94a3b8;margin-bottom:4px}
-.ctrl-row{display:flex;align-items:center;gap:8px}
-.ctrl-row input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;
-  background:#334155;outline:none}
-.ctrl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;
-  border-radius:50%;background:#60a5fa;cursor:pointer;border:2px solid #1e293b}
-.ctrl-row .val{min-width:62px;text-align:right;font-size:13px;font-weight:600;
-  color:#f1f5f9;font-variant-numeric:tabular-nums}
-
-.btn-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.btn{padding:6px 14px;border:1px solid #475569;border-radius:6px;background:#1e293b;
-  color:#cbd5e1;font-size:12px;cursor:pointer;transition:all .15s;user-select:none}
-.btn:hover{background:#334155;color:#f1f5f9;border-color:#60a5fa}
+.section{border-bottom:1px solid rgba(51,65,85,.5)}
+.sh{display:flex;align-items:center;gap:8px;padding:12px 18px 4px;
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#94a3b8;cursor:pointer;user-select:none}
+.sh .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sh .arrow{margin-left:auto;font-size:10px;transition:transform .2s}
+.section.collapsed .sb{display:none}
+.section.collapsed .arrow{transform:rotate(-90deg)}
+.sb{padding:4px 18px 12px}
+.ctrl{margin-bottom:8px}
+.ctrl>label{display:block;font-size:11px;color:#64748b;margin-bottom:3px}
+.cr{display:flex;align-items:center;gap:6px}
+.cr input[type=range]{flex:1;-webkit-appearance:none;height:5px;border-radius:3px;background:#334155;outline:none}
+.cr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#60a5fa;cursor:pointer;border:2px solid #1e293b}
+.cr .v{min-width:55px;text-align:right;font-size:12px;font-weight:600;color:#e2e8f0;font-variant-numeric:tabular-nums}
+.btn{padding:5px 12px;border:1px solid #475569;border-radius:5px;background:#1e293b;
+  color:#cbd5e1;font-size:11px;cursor:pointer;transition:all .15s;user-select:none}
+.btn:hover{background:#334155;border-color:#60a5fa;color:#f1f5f9}
 .btn:active{transform:scale(.96)}
-.btn.active{background:#1e40af;border-color:#3b82f6;color:white}
-
-.check-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px;color:#94a3b8}
-.check-row input{accent-color:#60a5fa}
-
-.info{padding:12px 20px;font-size:11px;color:#64748b;line-height:1.6}
-
-/* ── Main ── */
+.br{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.chk{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:12px;color:#94a3b8;cursor:pointer}
+.chk input{accent-color:#60a5fa;cursor:pointer}
+.door-card{background:#0f172a;border:1px solid #334155;border-radius:6px;padding:8px 10px;margin-bottom:6px;position:relative}
+.door-card.sel{border-color:#3b82f6}
+.dc-top{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.dc-top input[type=text]{background:#1e293b;border:1px solid #334155;border-radius:4px;color:#e2e8f0;
+  padding:2px 6px;font-size:11px;width:70px;outline:none}
+.dc-top input[type=text]:focus{border-color:#60a5fa}
+.dc-top select{background:#1e293b;border:1px solid #334155;border-radius:4px;color:#94a3b8;
+  padding:2px 4px;font-size:11px;outline:none;cursor:pointer}
+.dc-top select:focus{border-color:#60a5fa}
+.dc-del{margin-left:auto;background:none;border:none;color:#64748b;font-size:16px;cursor:pointer;padding:0 4px;line-height:1}
+.dc-del:hover{color:#f87171}
+.dc-range{display:flex;align-items:center;gap:6px}
+.dc-range input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:2px;background:#334155;outline:none}
+.dc-range input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fbbf24;cursor:pointer;border:2px solid #1e293b}
+.dc-range .v{font-size:11px;color:#94a3b8;min-width:40px;text-align:right}
+.add-door-row{display:flex;gap:6px;align-items:center;margin-top:6px}
+.add-door-row select{background:#1e293b;border:1px solid #334155;border-radius:4px;color:#94a3b8;
+  padding:4px 6px;font-size:11px;outline:none;flex:1}
+.info{padding:10px 18px;font-size:10px;color:#475569;line-height:1.5}
 #main{flex:1;position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center}
-canvas{display:block;border-radius:8px}
-#tip{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
-  background:rgba(30,41,59,.85);color:#94a3b8;padding:8px 18px;border-radius:20px;
-  font-size:12px;pointer-events:none;backdrop-filter:blur(8px);white-space:nowrap}
-#sel-info{position:absolute;top:16px;left:50%;transform:translateX(-50%);
-  background:rgba(30,41,59,.9);color:#e2e8f0;padding:8px 18px;border-radius:8px;
-  font-size:13px;pointer-events:none;backdrop-filter:blur(8px);min-width:200px;text-align:center;
-  opacity:0;transition:opacity .2s}
+canvas{display:block;border-radius:6px}
+#tip{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  background:rgba(30,41,59,.85);color:#94a3b8;padding:6px 16px;border-radius:18px;
+  font-size:11px;pointer-events:none;backdrop-filter:blur(8px);white-space:nowrap}
+#sel-info{position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  background:rgba(30,41,59,.9);color:#e2e8f0;padding:6px 16px;border-radius:6px;
+  font-size:12px;pointer-events:none;backdrop-filter:blur(8px);text-align:center;
+  opacity:0;transition:opacity .2s;white-space:nowrap}
 #sel-info.show{opacity:1}
 </style>
 </head>
@@ -64,779 +71,715 @@ canvas{display:block;border-radius:8px}
 <aside id="sidebar">
   <div class="logo"><span>⊞</span> Aménagement Séjour</div>
 
-  <div class="section">
-    <div class="section-header"><div class="dot" style="background:#fbbf24"></div> Dimensions Séjour</div>
-    <div class="section-body">
-      <div class="ctrl">
-        <label>Largeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="room-w" min="300" max="900" step="1" value="513">
-          <span class="val" id="room-w-v">5.13 m</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Profondeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="room-h" min="300" max="900" step="1" value="482">
-          <span class="val" id="room-h-v">4.82 m</span>
-        </div>
+  <div class="section" id="sec-room">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#fbbf24"></div>Dimensions Séjour<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Largeur</label><div class="cr"><input type="range" id="room-w" min="250" max="1000" step="1" value="513"><span class="v" id="room-w-v"></span></div></div>
+      <div class="ctrl"><label>Profondeur</label><div class="cr"><input type="range" id="room-h" min="250" max="1000" step="1" value="482"><span class="v" id="room-h-v"></span></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-bay">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#38bdf8"></div>Baie vitrée<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Mur</label><div class="cr">
+        <select id="bay-wall" onchange="S.bay.wall=this.value;clampBay();render()">
+          <option value="left">Gauche</option><option value="right">Droite</option>
+          <option value="top">Haut</option><option value="bottom">Bas</option>
+        </select></div></div>
+      <div class="ctrl"><label>Position</label><div class="cr"><input type="range" id="bay-pos" min="0" max="400" step="1" value="77"><span class="v" id="bay-pos-v"></span></div></div>
+      <div class="ctrl"><label>Longueur</label><div class="cr"><input type="range" id="bay-len" min="40" max="400" step="5" value="155"><span class="v" id="bay-len-v"></span></div></div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-doors">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#a78bfa"></div>Portes & Ouvertures<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div id="doors-list"></div>
+      <div class="add-door-row">
+        <select id="new-door-wall"><option value="top">Haut</option><option value="bottom" selected>Bas</option><option value="left">Gauche</option><option value="right">Droite</option></select>
+        <button class="btn" onclick="addDoor()">+ Ajouter</button>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-header"><div class="dot" style="background:#4ade80"></div> Canapé en L</div>
-    <div class="section-body">
-      <div class="ctrl">
-        <label>Grand côté</label>
-        <div class="ctrl-row">
-          <input type="range" id="sofa-long" min="150" max="350" step="5" value="230">
-          <span class="val" id="sofa-long-v">230 cm</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Petit côté (retour)</label>
-        <div class="ctrl-row">
-          <input type="range" id="sofa-short" min="80" max="250" step="5" value="160">
-          <span class="val" id="sofa-short-v">160 cm</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Profondeur assise</label>
-        <div class="ctrl-row">
-          <input type="range" id="sofa-depth" min="50" max="120" step="5" value="90">
-          <span class="val" id="sofa-depth-v">90 cm</span>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn" onclick="rotateFurniture('sofa')">↻ Tourner</button>
-        <button class="btn" onclick="mirrorSofa()">⇔ Retourner</button>
-      </div>
+  <div class="section" id="sec-tv">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#e2e8f0"></div>Meuble TV<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Largeur</label><div class="cr"><input type="range" id="tv-w" min="60" max="300" step="5" value="180"><span class="v" id="tv-w-v"></span></div></div>
+      <div class="ctrl"><label>Profondeur</label><div class="cr"><input type="range" id="tv-h" min="20" max="80" step="5" value="45"><span class="v" id="tv-h-v"></span></div></div>
+      <div class="br"><button class="btn" onclick="rotF('tv')">↻ Tourner</button></div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-header"><div class="dot" style="background:#f97316"></div> Table SAM</div>
-    <div class="section-body">
-      <div class="ctrl">
-        <label>Largeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="table-w" min="80" max="260" step="5" value="160">
-          <span class="val" id="table-w-v">160 cm</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Profondeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="table-h" min="60" max="140" step="5" value="90">
-          <span class="val" id="table-h-v">90 cm</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Nombre de chaises</label>
-        <div class="ctrl-row">
-          <input type="range" id="table-chairs" min="2" max="10" step="1" value="6">
-          <span class="val" id="table-chairs-v">6</span>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn" onclick="rotateFurniture('table')">↻ Tourner</button>
-      </div>
+  <div class="section" id="sec-sofa">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#4ade80"></div>Canapé en L<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Grand côté</label><div class="cr"><input type="range" id="sofa-long" min="150" max="380" step="5" value="230"><span class="v" id="sofa-long-v"></span></div></div>
+      <div class="ctrl"><label>Petit côté (retour)</label><div class="cr"><input type="range" id="sofa-short" min="80" max="280" step="5" value="160"><span class="v" id="sofa-short-v"></span></div></div>
+      <div class="ctrl"><label>Profondeur assise</label><div class="cr"><input type="range" id="sofa-depth" min="50" max="120" step="5" value="90"><span class="v" id="sofa-depth-v"></span></div></div>
+      <div class="br"><button class="btn" onclick="rotF('sofa')">↻ Tourner</button><button class="btn" onclick="mirrorSofa()">⇔ Retourner</button></div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-header"><div class="dot" style="background:#c4a265"></div> Table Basse</div>
-    <div class="section-body">
-      <div class="ctrl">
-        <label>Largeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="ct-w" min="40" max="150" step="5" value="110">
-          <span class="val" id="ct-w-v">110 cm</span>
-        </div>
-      </div>
-      <div class="ctrl">
-        <label>Profondeur</label>
-        <div class="ctrl-row">
-          <input type="range" id="ct-h" min="30" max="100" step="5" value="55">
-          <span class="val" id="ct-h-v">55 cm</span>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn" onclick="rotateFurniture('ct')">↻ Tourner</button>
-      </div>
+  <div class="section" id="sec-table">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#f97316"></div>Table SAM<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Largeur</label><div class="cr"><input type="range" id="tab-w" min="80" max="280" step="5" value="160"><span class="v" id="tab-w-v"></span></div></div>
+      <div class="ctrl"><label>Profondeur</label><div class="cr"><input type="range" id="tab-h" min="60" max="160" step="5" value="90"><span class="v" id="tab-h-v"></span></div></div>
+      <div class="br"><button class="btn" onclick="rotF('table')">↻ Tourner</button></div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-header"><div class="dot" style="background:#60a5fa"></div> Options</div>
-    <div class="section-body">
-      <label class="check-row"><input type="checkbox" id="opt-grid" checked> Afficher la grille</label>
-      <label class="check-row"><input type="checkbox" id="opt-dims" checked> Afficher les cotes</label>
-      <div class="btn-row" style="margin-top:12px">
-        <button class="btn" onclick="resetAll()">⟲ Réinitialiser</button>
-      </div>
+  <div class="section" id="sec-chairs">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#fb923c"></div>Chaises<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Nombre</label><div class="cr"><input type="range" id="ch-n" min="0" max="12" step="1" value="6"><span class="v" id="ch-n-v"></span></div></div>
+      <div class="ctrl"><label>Taille (côté)</label><div class="cr"><input type="range" id="ch-sz" min="30" max="60" step="2" value="42"><span class="v" id="ch-sz-v"></span></div></div>
+      <div class="br"><button class="btn" onclick="placeChairs();render()">↺ Replacer autour table</button></div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-ct">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#c4a265"></div>Table Basse<span class="arrow">▼</span></div>
+    <div class="sb">
+      <div class="ctrl"><label>Largeur</label><div class="cr"><input type="range" id="ct-w" min="40" max="160" step="5" value="110"><span class="v" id="ct-w-v"></span></div></div>
+      <div class="ctrl"><label>Profondeur</label><div class="cr"><input type="range" id="ct-h" min="30" max="100" step="5" value="55"><span class="v" id="ct-h-v"></span></div></div>
+      <div class="br"><button class="btn" onclick="rotF('ct')">↻ Tourner</button></div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-opts">
+    <div class="sh" onclick="togSec(this)"><div class="dot" style="background:#60a5fa"></div>Options<span class="arrow">▼</span></div>
+    <div class="sb">
+      <label class="chk"><input type="checkbox" id="opt-grid" checked onchange="S.showGrid=this.checked;render()"> Grille (50 cm)</label>
+      <label class="chk"><input type="checkbox" id="opt-dims" checked onchange="S.showDims=this.checked;render()"> Cotes</label>
+      <div class="br" style="margin-top:8px"><button class="btn" onclick="resetAll()">⟲ Réinitialiser tout</button></div>
     </div>
   </div>
 
   <div class="info">
-    <b>Utilisation :</b><br>
-    • Glissez les meubles pour les déplacer<br>
-    • Cliquez un meuble pour le sélectionner<br>
-    • Touches fléchées : déplacement fin<br>
-    • R : tourner &nbsp; M : retourner (canapé)
+    <b>Utilisation :</b> Glissez les meubles, portes et chaises.
+    Flèches = déplacement fin. R = tourner. M = retourner (canapé).
   </div>
 </aside>
 
 <main id="main">
   <canvas id="canvas"></canvas>
-  <div id="tip">Glissez les meubles pour les repositionner</div>
+  <div id="tip">Glissez les meubles, portes, chaises pour les repositionner</div>
   <div id="sel-info"></div>
 </main>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
-const canvas = $('canvas');
-const ctx = canvas.getContext('2d');
-const selInfo = $('sel-info');
+const canvas = $('canvas'), ctx = canvas.getContext('2d'), selEl = $('sel-info');
 
-const WALL = 12;
-const CHAIR_R = 18;
-const COLORS = {
-  floor: '#fefce8', wall: '#334155', wallStroke: '#1e293b',
-  grid: '#e5e7cb',
-  sofa: '#3d8b58', sofaLight: '#5bbd78', sofaSeat: '#4aa564', sofaBack: '#2d6b42',
-  table: '#8B5E3C', tableTop: '#A0522D', tableBorder: '#6b3e1f',
-  chair: '#c4813a', chairBorder: '#8B5E3C',
-  ct: '#bfa261', ctTop: '#d4b87a', ctBorder: '#96803e',
-  bayWindow: '#7ec8e3', tvPlug: '#eab308',
-  opening: '#fefce8', door: '#94a3b8',
-  selected: '#3b82f6', hover: '#60a5fa',
-  dimLine: '#64748b', dimText: '#475569'
+function togSec(el) { el.parentElement.classList.toggle('collapsed'); }
+
+const C = {
+  floor:'#fefce8', wall:'#334155',
+  sofa:'#3d8b58', sofaSeat:'#4aa564', sofaBack:'#2d6b42',
+  table:'#A0522D', tableBdr:'#6b3e1f',
+  chair:'#d4944a', chairBdr:'#8B5E3C', chairSel:'#fbbf24',
+  ct:'#bfa261', ctTop:'#d4b87a', ctBdr:'#96803e',
+  tv:'#475569', tvScreen:'#1e293b', tvBdr:'#334155',
+  bay:'#7dd3fc', bayBdr:'#0ea5e9', bayGlass:'#bae6fd',
+  doorGap:'#fefce8', doorArc:'#94a3b8',
+  sel:'#3b82f6', hov:'#60a5fa',
+  dimL:'#64748b', dimT:'#475569', grid1:'#e8e8cc', grid2:'#d8d8b6'
 };
 
-function defaults() {
+function mkDefaults() {
   return {
-    room: { w: 513, h: 482 },
-    sofa: { cx: 370, cy: 195, longArm: 230, shortArm: 160, depth: 90, rot: 0, mirror: false },
-    table: { cx: 165, cy: 400, w: 160, h: 90, rot: 0, chairs: 6 },
-    ct: { cx: 270, cy: 195, w: 110, h: 55, rot: 0 },
-    showGrid: true, showDims: true,
-    selected: null, dragging: false, hover: null,
-    dragOff: { x: 0, y: 0 },
-    scale: 1, ox: 0, oy: 0
+    room:{w:513,h:482},
+    bay:{wall:'left',pos:77,len:155},
+    doors:[
+      {id:0,label:'Cuisine',wall:'bottom',pos:0,width:72},
+      {id:1,label:'Entrée',wall:'bottom',pos:164,width:100},
+      {id:2,label:'Couloir',wall:'bottom',pos:308,width:205}
+    ],
+    nxDoor:3,
+    tv:{cx:256,cy:28,w:180,h:45,rot:0},
+    sofa:{cx:370,cy:195,longArm:230,shortArm:160,depth:90,rot:0,mirror:false},
+    table:{cx:165,cy:390,w:160,h:90,rot:0},
+    chairs:[],chairSz:42,chairN:6,
+    ct:{cx:270,cy:195,w:110,h:55,rot:0},
+    showGrid:true,showDims:true,
+    sel:null,hov:null,dragging:false,dragOff:{x:0,y:0},
+    scale:1,ox:0,oy:0
   };
 }
-let S = defaults();
+let S = mkDefaults();
+
+function placeChairs() {
+  const t = S.table, n = S.chairN, sz = S.chairSz;
+  const r = t.rot % 2 === 0, bw = r ? t.w : t.h, bh = r ? t.h : t.w;
+  const bx = t.cx - bw/2, by = t.cy - bh/2;
+  const gap = sz/2 + 12;
+  const chairs = [];
+  const ord = bw >= bh ? [0,1,2,3] : [2,3,0,1];
+  const cnt = [0,0,0,0];
+  let rem = n;
+  while (rem > 0) { for (const i of ord) { if (rem>0){cnt[i]++;rem--;} } }
+  const sides = [
+    {ax:'x',s:bx,l:bw,fv:by-gap},
+    {ax:'x',s:bx,l:bw,fv:by+bh+gap},
+    {ax:'y',s:by,l:bh,fv:bx-gap},
+    {ax:'y',s:by,l:bh,fv:bx+bw+gap}
+  ];
+  for (let si=0;si<4;si++) {
+    const sd=sides[si], c=cnt[si];
+    for (let i=0;i<c;i++) {
+      const p = sd.s + sd.l*(i+1)/(c+1);
+      chairs.push(sd.ax==='x' ? {cx:p,cy:sd.fv} : {cx:sd.fv,cy:p});
+    }
+  }
+  S.chairs = chairs;
+}
 
 function computeLayout() {
-  const pad = 60;
-  const cw = canvas.width, ch = canvas.height;
-  const scaleX = (cw - pad * 2) / (S.room.w + WALL * 2);
-  const scaleY = (ch - pad * 2) / (S.room.h + WALL * 2);
-  S.scale = Math.min(scaleX, scaleY);
-  S.ox = (cw - S.room.w * S.scale) / 2;
-  S.oy = (ch - S.room.h * S.scale) / 2;
+  const pad=50, cw=canvas.width/dpr(), ch=canvas.height/dpr();
+  const sx=(cw-pad*2)/S.room.w, sy=(ch-pad*2)/S.room.h;
+  S.scale=Math.min(sx,sy);
+  S.ox=(cw-S.room.w*S.scale)/2; S.oy=(ch-S.room.h*S.scale)/2;
+}
+function dpr(){return window.devicePixelRatio||1}
+function cm2px(x,y){return[S.ox+x*S.scale,S.oy+y*S.scale]}
+function px2cm(x,y){return[(x-S.ox)/S.scale,(y-S.oy)/S.scale]}
+
+function wallLen(w){return(w==='top'||w==='bottom')?S.room.w:S.room.h}
+function clampBay(){
+  const ml=wallLen(S.bay.wall);
+  S.bay.len=Math.min(S.bay.len,ml);
+  S.bay.pos=Math.max(0,Math.min(S.bay.pos,ml-S.bay.len));
+}
+function clampDoor(d){
+  const ml=wallLen(d.wall);
+  d.width=Math.min(d.width,ml);
+  d.pos=Math.max(0,Math.min(d.pos,ml-d.width));
+}
+function clampObj(key){
+  const o=S[key],rw=S.room.w,rh=S.room.h;
+  let bw,bh;
+  if(key==='sofa'){const r=o.rot%2===0;bw=r?o.shortArm:o.longArm;bh=r?o.longArm:o.shortArm;}
+  else{const r=o.rot%2===0;bw=r?o.w:o.h;bh=r?o.h:o.w;}
+  o.cx=Math.max(bw/2+1,Math.min(rw-bw/2-1,o.cx));
+  o.cy=Math.max(bh/2+1,Math.min(rh-bh/2-1,o.cy));
+}
+function clampChair(i){
+  const c=S.chairs[i],hs=S.chairSz/2;
+  c.cx=Math.max(hs,Math.min(S.room.w-hs,c.cx));
+  c.cy=Math.max(hs,Math.min(S.room.h-hs,c.cy));
 }
 
-function cmToPx(cx, cy) {
-  return [S.ox + cx * S.scale, S.oy + cy * S.scale];
-}
-function pxToCm(px, py) {
-  return [(px - S.ox) / S.scale, (py - S.oy) / S.scale];
-}
+/* ── DRAWING ── */
 
-function sofaBBox() {
-  const s = S.sofa;
-  const r = s.rot % 2 === 0;
-  const bw = r ? s.shortArm : s.longArm;
-  const bh = r ? s.longArm : s.shortArm;
-  return { x: s.cx - bw / 2, y: s.cy - bh / 2, w: bw, h: bh };
-}
-function rectBBox(obj) {
-  const r = obj.rot % 2 === 0;
-  const bw = r ? obj.w : obj.h;
-  const bh = r ? obj.h : obj.w;
-  return { x: obj.cx - bw / 2, y: obj.cy - bh / 2, w: bw, h: bh };
-}
-
-function drawRoom() {
-  const sc = S.scale, ox = S.ox, oy = S.oy, rw = S.room.w, rh = S.room.h;
-
-  if (S.showGrid) {
-    ctx.strokeStyle = COLORS.grid;
-    ctx.lineWidth = 0.5;
-    const step = 50;
-    for (let x = step; x < rw; x += step) {
-      const px = ox + x * sc;
-      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
-    }
-    for (let y = step; y < rh; y += step) {
-      const py = oy + y * sc;
-      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
-    }
-  }
-
-  ctx.fillStyle = COLORS.floor;
-  ctx.fillRect(ox, oy, rw * sc, rh * sc);
-
-  if (S.showGrid) {
-    ctx.strokeStyle = '#d5d6b8';
-    ctx.lineWidth = 0.3;
-    const step = 50;
-    for (let x = step; x < rw; x += step) {
-      const px = ox + x * sc;
-      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
-    }
-    for (let y = step; y < rh; y += step) {
-      const py = oy + y * sc;
-      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
-    }
-    ctx.strokeStyle = '#c8c9a6';
-    ctx.lineWidth = 0.6;
-    for (let x = 100; x < rw; x += 100) {
-      const px = ox + x * sc;
-      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
-    }
-    for (let y = 100; y < rh; y += 100) {
-      const py = oy + y * sc;
-      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
-    }
-  }
-
-  const wt = WALL * sc;
-  ctx.fillStyle = COLORS.wall;
-  ctx.fillRect(ox - wt, oy - wt, rw * sc + wt * 2, wt);
-  ctx.fillRect(ox - wt, oy + rh * sc, rw * sc + wt * 2, wt);
-  ctx.fillRect(ox - wt, oy, wt, rh * sc);
-  ctx.fillRect(ox + rw * sc, oy, wt, rh * sc);
-
-  const bvFrom = rh * 0.16, bvTo = rh * 0.48;
-  ctx.fillStyle = COLORS.bayWindow;
-  ctx.fillRect(ox - wt, oy + bvFrom * sc, wt, (bvTo - bvFrom) * sc);
-  ctx.fillStyle = '#bae6fd';
-  ctx.fillRect(ox - wt + 2, oy + bvFrom * sc + 2, wt - 4, (bvTo - bvFrom) * sc - 4);
-  ctx.strokeStyle = '#0ea5e9';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(ox - wt, oy + bvFrom * sc, wt, (bvTo - bvFrom) * sc);
-
-  ctx.save();
-  ctx.translate(ox - wt - 6, oy + (bvFrom + bvTo) / 2 * sc);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = '#0284c7';
-  ctx.font = '11px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Baie vitrée', 0, 0);
-  ctx.restore();
-
-  const tvFrom = rw * 0.35, tvTo = rw * 0.65;
-  ctx.fillStyle = COLORS.tvPlug;
-  ctx.fillRect(ox + tvFrom * sc, oy - wt, (tvTo - tvFrom) * sc, wt);
-  ctx.fillStyle = '#fde047';
-  ctx.fillRect(ox + tvFrom * sc + 2, oy - wt + 2, (tvTo - tvFrom) * sc - 4, wt - 4);
-  ctx.fillStyle = '#a16207';
-  ctx.font = '11px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Branchement TV', ox + (tvFrom + tvTo) / 2 * sc, oy - wt - 6);
-
-  const epFrom = rw * 0.32, epTo = rw * 0.52;
-  ctx.fillStyle = COLORS.floor;
-  ctx.fillRect(ox + epFrom * sc, oy + rh * sc, (epTo - epFrom) * sc, wt);
-  ctx.strokeStyle = COLORS.door;
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(ox + epFrom * sc, oy + rh * sc, (epTo - epFrom) * sc, wt);
-  ctx.beginPath();
-  ctx.arc(ox + epFrom * sc, oy + rh * sc + wt, (epTo - epFrom) * sc * 0.7, -Math.PI / 2, 0);
-  ctx.strokeStyle = '#94a3b8';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 3]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = '#64748b';
-  ctx.font = '10px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Entrée principale', ox + (epFrom + epTo) / 2 * sc, oy + rh * sc + wt + 16);
-
-  const pcTo = rw * 0.14;
-  ctx.fillStyle = COLORS.floor;
-  ctx.fillRect(ox, oy + rh * sc, pcTo * sc, wt);
-  ctx.strokeStyle = COLORS.door;
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(ox, oy + rh * sc, pcTo * sc, wt);
-  ctx.beginPath();
-  ctx.arc(ox, oy + rh * sc + wt, pcTo * sc * 0.7, -Math.PI / 2, 0);
-  ctx.strokeStyle = '#94a3b8';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 3]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = '#64748b';
-  ctx.font = '10px sans-serif';
-  ctx.fillText('Cuisine', ox + pcTo / 2 * sc, oy + rh * sc + wt + 16);
-
-  const coFrom = rw * 0.60;
-  ctx.fillStyle = '#e2e8f0';
-  ctx.fillRect(ox + coFrom * sc, oy + rh * sc, (rw - coFrom) * sc, wt);
-  ctx.strokeStyle = '#94a3b8';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(ox + coFrom * sc, oy + rh * sc, (rw - coFrom) * sc, wt);
-  ctx.fillStyle = '#64748b';
-  ctx.font = '10px sans-serif';
-  ctx.fillText('Couloir', ox + (coFrom + rw) / 2 * sc, oy + rh * sc + wt + 16);
-
-  if (S.showDims) {
-    ctx.strokeStyle = COLORS.dimLine;
-    ctx.fillStyle = COLORS.dimText;
-    ctx.font = 'bold 12px sans-serif';
-    ctx.lineWidth = 1;
-    ctx.textAlign = 'center';
-
-    const dy = oy - wt - 22;
-    ctx.beginPath();
-    ctx.moveTo(ox, dy); ctx.lineTo(ox + rw * sc, dy); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(ox, dy - 4); ctx.lineTo(ox, dy + 4); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(ox + rw * sc, dy - 4); ctx.lineTo(ox + rw * sc, dy + 4); ctx.stroke();
-    ctx.fillText((rw / 100).toFixed(2) + ' m', ox + rw * sc / 2, dy - 6);
-
-    const dx = ox + rw * sc + wt + 22;
-    ctx.beginPath();
-    ctx.moveTo(dx, oy); ctx.lineTo(dx, oy + rh * sc); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(dx - 4, oy); ctx.lineTo(dx + 4, oy); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(dx - 4, oy + rh * sc); ctx.lineTo(dx + 4, oy + rh * sc); ctx.stroke();
-    ctx.save();
-    ctx.translate(dx + 14, oy + rh * sc / 2);
-    ctx.rotate(Math.PI / 2);
-    ctx.fillText((rh / 100).toFixed(2) + ' m', 0, 0);
-    ctx.restore();
+function drawGrid(){
+  const sc=S.scale,ox=S.ox,oy=S.oy,rw=S.room.w,rh=S.room.h;
+  for(let pass=0;pass<2;pass++){
+    const step=pass?100:50;
+    ctx.strokeStyle=pass?C.grid2:C.grid1;
+    ctx.lineWidth=pass?0.7:0.4;
+    for(let x=step;x<rw;x+=step){const px=ox+x*sc;ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+rh*sc);ctx.stroke();}
+    for(let y=step;y<rh;y+=step){const py=oy+y*sc;ctx.beginPath();ctx.moveTo(ox,py);ctx.lineTo(ox+rw*sc,py);ctx.stroke();}
   }
 }
 
-function drawLSofa() {
-  const s = S.sofa, sc = S.scale;
-  const [px, py] = cmToPx(s.cx, s.cy);
-  const hw = s.shortArm / 2, hh = s.longArm / 2, d = s.depth;
-
-  ctx.save();
-  ctx.translate(px, py);
-  ctx.rotate(s.rot * Math.PI / 2);
-  if (s.mirror) ctx.scale(-1, 1);
-
-  const x0 = -hw * sc, y0 = -hh * sc;
-  const sa = s.shortArm * sc, la = s.longArm * sc, dd = d * sc;
-
-  const lPath = new Path2D();
-  lPath.moveTo(x0, y0 + la);
-  lPath.lineTo(x0, y0 + la - dd);
-  lPath.lineTo(x0 + sa - dd, y0 + la - dd);
-  lPath.lineTo(x0 + sa - dd, y0);
-  lPath.lineTo(x0 + sa, y0);
-  lPath.lineTo(x0 + sa, y0 + la);
-  lPath.closePath();
-
-  ctx.shadowColor = 'rgba(0,0,0,0.18)';
-  ctx.shadowBlur = 8 * sc / 80;
-  ctx.shadowOffsetX = 2;
-  ctx.shadowOffsetY = 2;
-  ctx.fillStyle = COLORS.sofa;
-  ctx.fill(lPath);
-  ctx.shadowColor = 'transparent';
-
-  ctx.strokeStyle = COLORS.sofaBack;
-  ctx.lineWidth = 1.5;
-  ctx.stroke(lPath);
-
-  const inset = 8 * sc / 80;
-  const backW = 18 * sc / 80;
-
-  ctx.fillStyle = COLORS.sofaBack;
-  ctx.fillRect(x0 + sa - dd + inset, y0 + inset, backW, la - dd - inset * 2);
-  ctx.fillRect(x0 + inset, y0 + la - dd + inset, sa - dd - inset, backW);
-
-  ctx.fillStyle = COLORS.sofaSeat;
-  const si = inset + backW + 4 * sc / 80;
-  ctx.beginPath();
-  ctx.roundRect(x0 + si, y0 + la - dd + si, sa - dd - si - inset, dd - si - inset, 4);
-  ctx.fill();
-
-  const vertSeatH = (la - dd - si - inset);
-  const nCush = Math.max(2, Math.round(vertSeatH / (80 * sc)));
-  const cushH = vertSeatH / nCush;
-  for (let i = 0; i < nCush; i++) {
-    ctx.beginPath();
-    ctx.roundRect(x0 + sa - dd + si, y0 + si + i * cushH, dd - si - inset, cushH - 3 * sc / 80, 4);
-    ctx.fill();
+function wallRect(wall){
+  const sc=S.scale,ox=S.ox,oy=S.oy,rw=S.room.w*sc,rh=S.room.h*sc,wt=Math.max(7,12*S.scale);
+  switch(wall){
+    case'top':return{x:ox-wt,y:oy-wt,w:rw+wt*2,h:wt,wt};
+    case'bottom':return{x:ox-wt,y:oy+rh,w:rw+wt*2,h:wt,wt};
+    case'left':return{x:ox-wt,y:oy,w:wt,h:rh,wt};
+    case'right':return{x:ox+rw,y:oy,w:wt,h:rh,wt};
   }
-
-  if (S.selected === 'sofa' || S.hover === 'sofa') {
-    ctx.strokeStyle = S.selected === 'sofa' ? COLORS.selected : COLORS.hover;
-    ctx.lineWidth = 2.5;
-    ctx.setLineDash([6, 4]);
-    ctx.stroke(lPath);
-    ctx.setLineDash([]);
-  }
-
-  if (S.showDims && S.selected === 'sofa') {
-    ctx.fillStyle = '#1e293b';
-    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText(s.shortArm + ' cm', x0 + sa / 2, y0 + la + 15 * sc / 80);
-    ctx.save();
-    ctx.translate(x0 + sa + 15 * sc / 80, y0 + la / 2);
-    ctx.rotate(Math.PI / 2);
-    ctx.fillText(s.longArm + ' cm', 0, 0);
-    ctx.restore();
-  }
-
-  ctx.restore();
 }
 
-function drawTable() {
-  const t = S.table, sc = S.scale;
-  const [px, py] = cmToPx(t.cx, t.cy);
+function drawWalls(){
+  const wt=Math.max(7,12*S.scale);
+  for(const w of['top','bottom','left','right']){
+    const r=wallRect(w);
+    ctx.fillStyle=C.wall;
+    ctx.fillRect(r.x,r.y,r.w,r.h);
+  }
+}
 
-  ctx.save();
-  ctx.translate(px, py);
-  ctx.rotate(t.rot * Math.PI / 2);
-
-  const tw = t.w * sc, th = t.h * sc;
-  const x0 = -tw / 2, y0 = -th / 2;
-
-  const nChairs = t.chairs;
-  const longSide = Math.max(t.w, t.h);
-  const shortSide = Math.min(t.w, t.h);
-  const isWide = t.w >= t.h;
-
-  let longCount, shortCount;
-  if (nChairs <= 4) {
-    longCount = 1; shortCount = 1;
-  } else if (nChairs <= 6) {
-    longCount = 2; shortCount = 1;
-  } else if (nChairs <= 8) {
-    longCount = 3; shortCount = 1;
+function openingPixels(wall,pos,len){
+  const sc=S.scale,ox=S.ox,oy=S.oy,rw=S.room.w*sc,rh=S.room.h*sc,wt=Math.max(7,12*S.scale);
+  const horiz=wall==='top'||wall==='bottom';
+  if(horiz){
+    const x=ox+pos*sc, w=len*sc;
+    const y=wall==='top'?oy-wt:oy+rh;
+    return{x,y,w,h:wt,horiz:true};
   } else {
-    longCount = 4; shortCount = 1;
+    const yy=oy+pos*sc, h=len*sc;
+    const x=wall==='left'?ox-wt:ox+rw;
+    return{x,y:yy,w:wt,h,horiz:false};
   }
+}
 
-  const cr = CHAIR_R * sc / 80;
-  const chairGap = 6 * sc / 80;
-
-  function drawChair(cx, cy) {
-    ctx.beginPath();
-    ctx.arc(cx, cy, cr, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.chair;
-    ctx.fill();
-    ctx.strokeStyle = COLORS.chairBorder;
-    ctx.lineWidth = 1.2;
-    ctx.stroke();
+function drawBayWindow(){
+  const b=S.bay,o=openingPixels(b.wall,b.pos,b.len);
+  ctx.fillStyle=C.bay;ctx.fillRect(o.x,o.y,o.w,o.h);
+  const ins=2;
+  ctx.fillStyle=C.bayGlass;ctx.fillRect(o.x+ins,o.y+ins,o.w-ins*2,o.h-ins*2);
+  ctx.strokeStyle=C.bayBdr;ctx.lineWidth=1.2;ctx.strokeRect(o.x,o.y,o.w,o.h);
+  if(o.horiz){
+    for(let i=1;i<3;i++){const xx=o.x+o.w*i/3;ctx.beginPath();ctx.moveTo(xx,o.y+ins);ctx.lineTo(xx,o.y+o.h-ins);ctx.stroke();}
+  } else {
+    for(let i=1;i<3;i++){const yy=o.y+o.h*i/3;ctx.beginPath();ctx.moveTo(o.x+ins,yy);ctx.lineTo(o.x+o.w-ins,yy);ctx.stroke();}
   }
-
-  for (let i = 0; i < longCount; i++) {
-    const fx = x0 + tw * (i + 1) / (longCount + 1);
-    drawChair(fx, y0 - cr - chairGap);
-    drawChair(fx, y0 + th + cr + chairGap);
+  const isSel=S.sel==='bay',isHov=S.hov==='bay';
+  if(isSel||isHov){
+    ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2.5;ctx.setLineDash([5,3]);
+    ctx.strokeRect(o.x-2,o.y-2,o.w+4,o.h+4);ctx.setLineDash([]);
   }
-  if (shortCount >= 1) {
-    drawChair(x0 - cr - chairGap, 0);
-    drawChair(x0 + tw + cr + chairGap, 0);
+  ctx.fillStyle='#0284c7';ctx.font='10px sans-serif';ctx.textAlign='center';
+  if(o.horiz){ctx.fillText('Baie vitrée',(o.x+o.w/2),o.y+(b.wall==='top'?-6:o.h+12));}
+  else{ctx.save();ctx.translate(o.x+(b.wall==='left'?-6:o.w+12),o.y+o.h/2);ctx.rotate(-Math.PI/2);ctx.fillText('Baie vitrée',0,0);ctx.restore();}
+}
+
+function drawDoors(){
+  for(const d of S.doors){
+    const o=openingPixels(d.wall,d.pos,d.width);
+    ctx.fillStyle=C.doorGap;ctx.fillRect(o.x,o.y,o.w,o.h);
+    ctx.strokeStyle=C.doorArc;ctx.lineWidth=1;ctx.strokeRect(o.x,o.y,o.w,o.h);
+    ctx.setLineDash([4,3]);ctx.beginPath();
+    const sc=S.scale, arcR = d.width*sc*0.6;
+    if(d.wall==='bottom'){ctx.arc(o.x,o.y+o.h,arcR,-Math.PI/2,0);}
+    else if(d.wall==='top'){ctx.arc(o.x+o.w,o.y,arcR,Math.PI/2,Math.PI);}
+    else if(d.wall==='left'){ctx.arc(o.x,o.y,arcR,0,Math.PI/2);}
+    else{ctx.arc(o.x+o.w,o.y+o.h,arcR,Math.PI,Math.PI*1.5);}
+    ctx.stroke();ctx.setLineDash([]);
+    const isSel=S.sel==='door:'+d.id,isHov=S.hov==='door:'+d.id;
+    if(isSel||isHov){
+      ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2;ctx.setLineDash([5,3]);
+      ctx.strokeRect(o.x-2,o.y-2,o.w+4,o.h+4);ctx.setLineDash([]);
+    }
+    ctx.fillStyle='#64748b';ctx.font='10px sans-serif';ctx.textAlign='center';
+    if(o.horiz){ctx.fillText(d.label,o.x+o.w/2,o.y+(d.wall==='top'?-5:o.h+13));}
+    else{ctx.save();ctx.translate(o.x+(d.wall==='left'?-5:o.w+10),o.y+o.h/2);ctx.rotate(-Math.PI/2);ctx.fillText(d.label,0,0);ctx.restore();}
   }
+}
 
-  ctx.shadowColor = 'rgba(0,0,0,0.15)';
-  ctx.shadowBlur = 6 * sc / 80;
-  ctx.shadowOffsetX = 1;
-  ctx.shadowOffsetY = 1;
-  ctx.beginPath();
-  ctx.roundRect(x0, y0, tw, th, 6 * sc / 80);
-  ctx.fillStyle = COLORS.tableTop;
-  ctx.fill();
-  ctx.shadowColor = 'transparent';
-  ctx.strokeStyle = COLORS.tableBorder;
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
+function drawRoomDims(){
+  if(!S.showDims)return;
+  const sc=S.scale,ox=S.ox,oy=S.oy,rw=S.room.w*sc,rh=S.room.h*sc,wt=Math.max(7,12*sc);
+  ctx.strokeStyle=C.dimL;ctx.fillStyle=C.dimT;ctx.font='bold 12px sans-serif';ctx.lineWidth=1;ctx.textAlign='center';
+  const dy=oy-wt-20;
+  ctx.beginPath();ctx.moveTo(ox,dy);ctx.lineTo(ox+rw,dy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ox,dy-4);ctx.lineTo(ox,dy+4);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ox+rw,dy-4);ctx.lineTo(ox+rw,dy+4);ctx.stroke();
+  ctx.fillText((S.room.w/100).toFixed(2)+' m',ox+rw/2,dy-5);
+  const dx=ox+rw+wt+20;
+  ctx.beginPath();ctx.moveTo(dx,oy);ctx.lineTo(dx,oy+rh);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(dx-4,oy);ctx.lineTo(dx+4,oy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(dx-4,oy+rh);ctx.lineTo(dx+4,oy+rh);ctx.stroke();
+  ctx.save();ctx.translate(dx+14,oy+rh/2);ctx.rotate(Math.PI/2);ctx.fillText((S.room.h/100).toFixed(2)+' m',0,0);ctx.restore();
+}
 
-  ctx.beginPath();
-  ctx.roundRect(x0 + 6 * sc / 80, y0 + 6 * sc / 80, tw - 12 * sc / 80, th - 12 * sc / 80, 3 * sc / 80);
-  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  if (S.selected === 'table' || S.hover === 'table') {
-    ctx.strokeStyle = S.selected === 'table' ? COLORS.selected : COLORS.hover;
-    ctx.lineWidth = 2.5;
-    ctx.setLineDash([6, 4]);
-    ctx.beginPath();
-    ctx.roundRect(x0 - cr - chairGap - 4, y0 - cr - chairGap - 4,
-      tw + (cr + chairGap + 4) * 2, th + (cr + chairGap + 4) * 2, 8);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  if (S.showDims && S.selected === 'table') {
-    ctx.fillStyle = '#1e293b';
-    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText(t.w + ' cm', 0, y0 + th + cr + chairGap + 22 * sc / 80);
-    ctx.save();
-    ctx.translate(x0 + tw + cr + chairGap + 18 * sc / 80, 0);
-    ctx.rotate(Math.PI / 2);
-    ctx.fillText(t.h + ' cm', 0, 0);
-    ctx.restore();
-  }
-
+function drawTV(){
+  const t=S.tv,sc=S.scale,[px,py]=cm2px(t.cx,t.cy);
+  ctx.save();ctx.translate(px,py);ctx.rotate(t.rot*Math.PI/2);
+  const tw=t.w*sc,th=t.h*sc;
+  ctx.shadowColor='rgba(0,0,0,.15)';ctx.shadowBlur=5;
+  ctx.beginPath();ctx.roundRect(-tw/2,-th/2,tw,th,4*sc/80);
+  ctx.fillStyle=C.tv;ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle=C.tvBdr;ctx.lineWidth=1.2;ctx.stroke();
+  const scrH=Math.min(8*sc/80,th*0.2);
+  ctx.fillStyle=C.tvScreen;ctx.fillRect(-tw*0.42,-th/2+3*sc/80,tw*0.84,scrH);
+  ctx.fillStyle='#cbd5e1';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.textAlign='center';
+  ctx.fillText('Meuble TV',0,4);
+  const isSel=S.sel==='tv',isHov=S.hov==='tv';
+  if(isSel||isHov){ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2.5;ctx.setLineDash([5,3]);ctx.beginPath();ctx.roundRect(-tw/2-3,-th/2-3,tw+6,th+6,6);ctx.stroke();ctx.setLineDash([]);}
+  if(S.showDims&&isSel){ctx.fillStyle='#1e293b';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.fillText(t.w+'×'+t.h+' cm',0,th/2+13*sc/80);}
   ctx.restore();
 }
 
-function drawCoffeeTable() {
-  const c = S.ct, sc = S.scale;
-  const [px, py] = cmToPx(c.cx, c.cy);
-
-  ctx.save();
-  ctx.translate(px, py);
-  ctx.rotate(c.rot * Math.PI / 2);
-
-  const cw = c.w * sc, ch = c.h * sc;
-  const x0 = -cw / 2, y0 = -ch / 2;
-
-  ctx.shadowColor = 'rgba(0,0,0,0.12)';
-  ctx.shadowBlur = 4 * sc / 80;
-  ctx.beginPath();
-  ctx.roundRect(x0, y0, cw, ch, 5 * sc / 80);
-  ctx.fillStyle = COLORS.ct;
-  ctx.fill();
-  ctx.shadowColor = 'transparent';
-  ctx.strokeStyle = COLORS.ctBorder;
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.roundRect(x0 + 5 * sc / 80, y0 + 5 * sc / 80, cw - 10 * sc / 80, ch - 10 * sc / 80, 3 * sc / 80);
-  ctx.fillStyle = COLORS.ctTop;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-  ctx.lineWidth = 0.8;
-  ctx.stroke();
-
-  if (S.selected === 'ct' || S.hover === 'ct') {
-    ctx.strokeStyle = S.selected === 'ct' ? COLORS.selected : COLORS.hover;
-    ctx.lineWidth = 2.5;
-    ctx.setLineDash([6, 4]);
-    ctx.beginPath();
-    ctx.roundRect(x0 - 4, y0 - 4, cw + 8, ch + 8, 6);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-
-  if (S.showDims && S.selected === 'ct') {
-    ctx.fillStyle = '#1e293b';
-    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText(c.w + ' cm', 0, y0 + ch + 16 * sc / 80);
-  }
-
+function drawSofa(){
+  const s=S.sofa,sc=S.scale,[px,py]=cm2px(s.cx,s.cy);
+  ctx.save();ctx.translate(px,py);ctx.rotate(s.rot*Math.PI/2);
+  if(s.mirror)ctx.scale(-1,1);
+  const hw=s.shortArm/2*sc,hh=s.longArm/2*sc,d=s.depth*sc;
+  const p=new Path2D();
+  p.moveTo(-hw,hh);p.lineTo(-hw,hh-d);p.lineTo(hw-d,hh-d);p.lineTo(hw-d,-hh);p.lineTo(hw,-hh);p.lineTo(hw,hh);p.closePath();
+  ctx.shadowColor='rgba(0,0,0,.18)';ctx.shadowBlur=8;
+  ctx.fillStyle=C.sofa;ctx.fill(p);ctx.shadowColor='transparent';
+  ctx.strokeStyle=C.sofaBack;ctx.lineWidth=1.5;ctx.stroke(p);
+  const ins=6*sc/80,bw=14*sc/80;
+  ctx.fillStyle=C.sofaBack;
+  ctx.fillRect(hw-d+ins,-hh+ins,bw,hh*2-d-ins);
+  ctx.fillRect(-hw+ins,hh-d+ins,hw*2-d-ins,bw);
+  ctx.fillStyle=C.sofaSeat;
+  const si=ins+bw+3*sc/80;
+  ctx.beginPath();ctx.roundRect(-hw+si,hh-d+si,hw*2-d-si-ins,d-si-ins,3);ctx.fill();
+  const vH=hh*2-d-si-ins,nC=Math.max(2,Math.round(vH/(65*sc/80)));
+  for(let i=0;i<nC;i++){ctx.beginPath();ctx.roundRect(hw-d+si,-hh+si+i*(vH/nC),d-si-ins,vH/nC-2*sc/80,3);ctx.fill();}
+  const isSel=S.sel==='sofa',isHov=S.hov==='sofa';
+  if(isSel||isHov){ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2.5;ctx.setLineDash([5,3]);ctx.stroke(p);ctx.setLineDash([]);}
+  if(S.showDims&&isSel){ctx.fillStyle='#1e293b';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.textAlign='center';
+    ctx.fillText(s.shortArm+' cm',-hw+hw,hh+13*sc/80);
+    ctx.save();ctx.translate(hw+13*sc/80,0);ctx.rotate(Math.PI/2);ctx.fillText(s.longArm+' cm',0,0);ctx.restore();}
   ctx.restore();
 }
 
-function render() {
-  const dpr = window.devicePixelRatio || 1;
-  const rect = $('main').getBoundingClientRect();
-  const cw = rect.width, ch = rect.height;
-  canvas.width = cw * dpr;
-  canvas.height = ch * dpr;
-  canvas.style.width = cw + 'px';
-  canvas.style.height = ch + 'px';
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+function drawTable(){
+  const t=S.table,sc=S.scale,[px,py]=cm2px(t.cx,t.cy);
+  ctx.save();ctx.translate(px,py);ctx.rotate(t.rot*Math.PI/2);
+  const tw=t.w*sc,th=t.h*sc;
+  ctx.shadowColor='rgba(0,0,0,.14)';ctx.shadowBlur=5;
+  ctx.beginPath();ctx.roundRect(-tw/2,-th/2,tw,th,5*sc/80);
+  ctx.fillStyle=C.table;ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle=C.tableBdr;ctx.lineWidth=1.5;ctx.stroke();
+  ctx.beginPath();ctx.roundRect(-tw/2+5*sc/80,-th/2+5*sc/80,tw-10*sc/80,th-10*sc/80,3*sc/80);
+  ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle='#fde8d0';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.textAlign='center';ctx.fillText('Table SAM',0,4);
+  const isSel=S.sel==='table',isHov=S.hov==='table';
+  if(isSel||isHov){ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2.5;ctx.setLineDash([5,3]);ctx.beginPath();ctx.roundRect(-tw/2-4,-th/2-4,tw+8,th+8,6);ctx.stroke();ctx.setLineDash([]);}
+  if(S.showDims&&isSel){ctx.fillStyle='#1e293b';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.fillText(t.w+'×'+t.h+' cm',0,th/2+14*sc/80);}
+  ctx.restore();
+}
+
+function drawChairs(){
+  const sc=S.scale, sz=S.chairSz*sc, r=sz/2, corner=sz*0.18;
+  for(let i=0;i<S.chairs.length;i++){
+    const c=S.chairs[i],[px,py]=cm2px(c.cx,c.cy);
+    const isSel=S.sel==='ch:'+i,isHov=S.hov==='ch:'+i;
+    ctx.beginPath();ctx.roundRect(px-r,py-r,sz,sz,corner);
+    ctx.fillStyle=isSel?C.chairSel:C.chair;ctx.fill();
+    ctx.strokeStyle=isSel?'#b45309':C.chairBdr;ctx.lineWidth=isSel?2:1.2;ctx.stroke();
+    if(isHov&&!isSel){ctx.strokeStyle=C.hov;ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);}
+    ctx.fillStyle=isSel?'#78350f':'#6b3e1f';ctx.font=`${Math.max(8,9*sc/80)}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(''+(i+1),px,py);ctx.textBaseline='alphabetic';
+  }
+}
+
+function drawCT(){
+  const c=S.ct,sc=S.scale,[px,py]=cm2px(c.cx,c.cy);
+  ctx.save();ctx.translate(px,py);ctx.rotate(c.rot*Math.PI/2);
+  const cw=c.w*sc,ch=c.h*sc;
+  ctx.shadowColor='rgba(0,0,0,.12)';ctx.shadowBlur=4;
+  ctx.beginPath();ctx.roundRect(-cw/2,-ch/2,cw,ch,4*sc/80);ctx.fillStyle=C.ct;ctx.fill();
+  ctx.shadowColor='transparent';ctx.strokeStyle=C.ctBdr;ctx.lineWidth=1.2;ctx.stroke();
+  ctx.beginPath();ctx.roundRect(-cw/2+4*sc/80,-ch/2+4*sc/80,cw-8*sc/80,ch-8*sc/80,3*sc/80);
+  ctx.fillStyle=C.ctTop;ctx.fill();
+  const isSel=S.sel==='ct',isHov=S.hov==='ct';
+  if(isSel||isHov){ctx.strokeStyle=isSel?C.sel:C.hov;ctx.lineWidth=2.5;ctx.setLineDash([5,3]);ctx.beginPath();ctx.roundRect(-cw/2-3,-ch/2-3,cw+6,ch+6,6);ctx.stroke();ctx.setLineDash([]);}
+  if(S.showDims&&isSel){ctx.fillStyle='#1e293b';ctx.font=`bold ${Math.max(9,10*sc/80)}px sans-serif`;ctx.textAlign='center';ctx.fillText(c.w+'×'+c.h+' cm',0,ch/2+13*sc/80);}
+  ctx.restore();
+}
+
+function render(){
+  const d=dpr(),rect=$('main').getBoundingClientRect(),cw=rect.width,ch=rect.height;
+  canvas.width=cw*d;canvas.height=ch*d;canvas.style.width=cw+'px';canvas.style.height=ch+'px';
+  ctx.setTransform(d,0,0,d,0,0);
   computeLayout();
-
-  ctx.clearRect(0, 0, cw, ch);
-  drawRoom();
-  drawCoffeeTable();
+  ctx.clearRect(0,0,cw,ch);
+  ctx.fillStyle=C.floor;ctx.fillRect(S.ox,S.oy,S.room.w*S.scale,S.room.h*S.scale);
+  if(S.showGrid)drawGrid();
+  drawWalls();
+  drawBayWindow();
+  drawDoors();
+  drawRoomDims();
+  drawCT();
   drawTable();
-  drawLSofa();
+  drawChairs();
+  drawSofa();
+  drawTV();
   updateSelInfo();
 }
 
-function pointInLSofa(cmx, cmy) {
-  const s = S.sofa;
-  let lx = cmx - s.cx, ly = cmy - s.cy;
-  const cos = [1, 0, -1, 0][s.rot % 4];
-  const sin = [0, 1, 0, -1][s.rot % 4];
-  let rx = lx * cos + ly * sin;
-  let ry = -lx * sin + ly * cos;
-  if (s.mirror) rx = -rx;
-  const hw = s.shortArm / 2, hh = s.longArm / 2, d = s.depth;
-  const inVert = rx >= hw - d && rx <= hw && ry >= -hh && ry <= hh;
-  const inHoriz = rx >= -hw && rx <= hw && ry >= hh - d && ry <= hh;
-  return inVert || inHoriz;
+/* ── HIT TESTING ── */
+
+function ptInRotRect(mx,my,obj){
+  let lx=mx-obj.cx,ly=my-obj.cy;
+  const cs=[1,0,-1,0],sn=[0,1,0,-1];
+  const c=cs[obj.rot%4],s=sn[obj.rot%4];
+  const rx=lx*c+ly*s, ry=-lx*s+ly*c;
+  return Math.abs(rx)<=obj.w/2+4 && Math.abs(ry)<=obj.h/2+4;
 }
 
-function pointInRect(cmx, cmy, obj) {
-  let lx = cmx - obj.cx, ly = cmy - obj.cy;
-  const cos = [1, 0, -1, 0][obj.rot % 4];
-  const sin = [0, 1, 0, -1][obj.rot % 4];
-  const rx = lx * cos + ly * sin;
-  const ry = -lx * sin + ly * cos;
-  const hw = obj.w / 2, hh = obj.h / 2;
-  const pad = obj === S.table ? CHAIR_R + 8 : 4;
-  return rx >= -hw - pad && rx <= hw + pad && ry >= -hh - pad && ry <= hh + pad;
+function ptInSofa(mx,my){
+  const s=S.sofa;
+  let lx=mx-s.cx,ly=my-s.cy;
+  const cs=[1,0,-1,0],sn=[0,1,0,-1],c=cs[s.rot%4],si=sn[s.rot%4];
+  let rx=lx*c+ly*si, ry=-lx*si+ly*c;
+  if(s.mirror)rx=-rx;
+  const hw=s.shortArm/2,hh=s.longArm/2,d=s.depth;
+  return(rx>=hw-d-4&&rx<=hw+4&&ry>=-hh-4&&ry<=hh+4)||(rx>=-hw-4&&rx<=hw+4&&ry>=hh-d-4&&ry<=hh+4);
 }
 
-function hitTest(canvasX, canvasY) {
-  const [cmx, cmy] = pxToCm(canvasX, canvasY);
-  if (pointInLSofa(cmx, cmy)) return 'sofa';
-  if (pointInRect(cmx, cmy, S.table)) return 'table';
-  if (pointInRect(cmx, cmy, S.ct)) return 'ct';
+function ptInChair(mx,my,i){
+  const c=S.chairs[i],hs=S.chairSz/2+4;
+  return Math.abs(mx-c.cx)<=hs&&Math.abs(my-c.cy)<=hs;
+}
+
+function ptOnWallOpening(mx,my,wall,pos,len){
+  const sc=S.scale,wt=Math.max(7,12*sc)/sc;
+  const horiz=wall==='top'||wall==='bottom';
+  if(horiz){
+    const wy=wall==='top'?-wt:S.room.h;
+    return mx>=pos-4&&mx<=pos+len+4&&my>=wy-6&&my<=wy+wt+6;
+  } else {
+    const wx=wall==='left'?-wt:S.room.w;
+    return my>=pos-4&&my<=pos+len+4&&mx>=wx-6&&mx<=wx+wt+6;
+  }
+}
+
+function hitTest(canvasX,canvasY){
+  const[mx,my]=px2cm(canvasX,canvasY);
+  for(let i=S.chairs.length-1;i>=0;i--) if(ptInChair(mx,my,i))return'ch:'+i;
+  if(ptInRotRect(mx,my,S.tv))return'tv';
+  if(ptInSofa(mx,my))return'sofa';
+  if(ptInRotRect(mx,my,S.table))return'table';
+  if(ptInRotRect(mx,my,S.ct))return'ct';
+  for(const d of S.doors) if(ptOnWallOpening(mx,my,d.wall,d.pos,d.width))return'door:'+d.id;
+  if(ptOnWallOpening(mx,my,S.bay.wall,S.bay.pos,S.bay.len))return'bay';
   return null;
 }
 
-function clampFurniture() {
-  const rw = S.room.w, rh = S.room.h;
-  for (const key of ['sofa', 'table', 'ct']) {
-    const obj = S[key];
-    let bw, bh;
-    if (key === 'sofa') {
-      const bb = sofaBBox();
-      bw = bb.w; bh = bb.h;
-    } else {
-      const bb = rectBBox(obj);
-      bw = bb.w; bh = bb.h;
-    }
-    obj.cx = Math.max(bw / 2 + 2, Math.min(rw - bw / 2 - 2, obj.cx));
-    obj.cy = Math.max(bh / 2 + 2, Math.min(rh - bh / 2 - 2, obj.cy));
-  }
-}
+/* ── INTERACTION ── */
 
-canvas.addEventListener('pointerdown', e => {
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-  const hit = hitTest(mx, my);
-  S.selected = hit;
-  if (hit) {
-    S.dragging = true;
-    const [cmx, cmy] = pxToCm(mx, my);
-    S.dragOff = { x: cmx - S[hit].cx, y: cmy - S[hit].cy };
+canvas.addEventListener('pointerdown',e=>{
+  const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  const hit=hitTest(mx,my);
+  S.sel=hit;
+  if(hit){
+    S.dragging=true;
+    const[cmx,cmy]=px2cm(mx,my);
+    const obj=getSelObj(hit);
+    if(obj){
+      if(obj._wallItem){
+        S.dragOff={x:cmx-(obj._horiz?obj.pos:0),y:cmy-(obj._horiz?0:obj.pos)};
+      } else {
+        S.dragOff={x:cmx-obj.cx,y:cmy-obj.cy};
+      }
+    }
     canvas.setPointerCapture(e.pointerId);
   }
+  renderDoorCards();
   render();
 });
 
-canvas.addEventListener('pointermove', e => {
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-  if (S.dragging && S.selected) {
-    const [cmx, cmy] = pxToCm(mx, my);
-    S[S.selected].cx = cmx - S.dragOff.x;
-    S[S.selected].cy = cmy - S.dragOff.y;
-    clampFurniture();
-    canvas.style.cursor = 'grabbing';
+canvas.addEventListener('pointermove',e=>{
+  const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  if(S.dragging&&S.sel){
+    const[cmx,cmy]=px2cm(mx,my);
+    const obj=getSelObj(S.sel);
+    if(obj){
+      if(obj._wallItem){
+        const horiz=obj._horiz;
+        const newPos=horiz?cmx-S.dragOff.x:cmy-S.dragOff.y;
+        obj.pos=Math.max(0,Math.min(newPos,wallLen(obj.wall)-obj[obj._lenKey]));
+        syncBayControls(); syncDoorCard(obj);
+      } else {
+        obj.cx=cmx-S.dragOff.x;obj.cy=cmy-S.dragOff.y;
+        if(S.sel.startsWith('ch:')){clampChair(+S.sel.split(':')[1]);}
+        else{clampObj(S.sel==='sofa'?'sofa':S.sel==='table'?'table':S.sel==='tv'?'tv':'ct');}
+      }
+    }
+    canvas.style.cursor='grabbing';
     render();
   } else {
-    const hit = hitTest(mx, my);
-    S.hover = hit;
-    canvas.style.cursor = hit ? 'grab' : 'default';
+    const hit=hitTest(mx,my);
+    S.hov=hit;
+    canvas.style.cursor=hit?'grab':'default';
     render();
   }
 });
 
-canvas.addEventListener('pointerup', () => {
-  S.dragging = false;
-  canvas.style.cursor = S.hover ? 'grab' : 'default';
-});
+canvas.addEventListener('pointerup',()=>{S.dragging=false;canvas.style.cursor=S.hov?'grab':'default';});
 
-document.addEventListener('keydown', e => {
-  if (!S.selected) return;
-  const step = e.shiftKey ? 10 : 2;
-  const obj = S[S.selected];
-  switch (e.key) {
-    case 'ArrowLeft': obj.cx -= step; e.preventDefault(); break;
-    case 'ArrowRight': obj.cx += step; e.preventDefault(); break;
-    case 'ArrowUp': obj.cy -= step; e.preventDefault(); break;
-    case 'ArrowDown': obj.cy += step; e.preventDefault(); break;
-    case 'r': case 'R': rotateFurniture(S.selected); return;
-    case 'm': case 'M': if (S.selected === 'sofa') { mirrorSofa(); return; } break;
-    case 'Escape': S.selected = null; render(); return;
-    default: return;
+function getSelObj(sel){
+  if(!sel)return null;
+  if(sel==='sofa')return S.sofa;
+  if(sel==='table')return S.table;
+  if(sel==='ct')return S.ct;
+  if(sel==='tv')return S.tv;
+  if(sel==='bay'){const b=S.bay;b._wallItem=true;b._horiz=(b.wall==='top'||b.wall==='bottom');b._lenKey='len';return b;}
+  if(sel.startsWith('door:')){const id=+sel.split(':')[1];const d=S.doors.find(x=>x.id===id);if(d){d._wallItem=true;d._horiz=(d.wall==='top'||d.wall==='bottom');d._lenKey='width';return d;}return null;}
+  if(sel.startsWith('ch:')){return S.chairs[+sel.split(':')[1]];}
+  return null;
+}
+
+document.addEventListener('keydown',e=>{
+  if(!S.sel)return;
+  const step=e.shiftKey?10:2;
+  if(S.sel.startsWith('door:')||S.sel==='bay'){
+    const obj=getSelObj(S.sel);if(!obj)return;
+    const horiz=obj._horiz;
+    if((horiz&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))||(!horiz&&(e.key==='ArrowUp'||e.key==='ArrowDown'))){
+      const dir=(e.key==='ArrowRight'||e.key==='ArrowDown')?step:-step;
+      obj.pos=Math.max(0,Math.min(obj.pos+dir,wallLen(obj.wall)-obj[obj._lenKey]));
+      syncBayControls();syncDoorCard(obj);e.preventDefault();render();
+    }
+    return;
   }
-  clampFurniture();
-  render();
+  if(S.sel.startsWith('ch:')){
+    const i=+S.sel.split(':')[1],c=S.chairs[i];if(!c)return;
+    switch(e.key){
+      case'ArrowLeft':c.cx-=step;break;case'ArrowRight':c.cx+=step;break;
+      case'ArrowUp':c.cy-=step;break;case'ArrowDown':c.cy+=step;break;
+      default:return;
+    }
+    clampChair(i);e.preventDefault();render();return;
+  }
+  const obj=S[S.sel];if(!obj)return;
+  switch(e.key){
+    case'ArrowLeft':obj.cx-=step;e.preventDefault();break;
+    case'ArrowRight':obj.cx+=step;e.preventDefault();break;
+    case'ArrowUp':obj.cy-=step;e.preventDefault();break;
+    case'ArrowDown':obj.cy+=step;e.preventDefault();break;
+    case'r':case'R':rotF(S.sel);return;
+    case'm':case'M':if(S.sel==='sofa'){mirrorSofa();return;}break;
+    case'Escape':S.sel=null;renderDoorCards();render();return;
+    default:return;
+  }
+  clampObj(S.sel);render();
 });
 
-function rotateFurniture(key) {
-  S[key].rot = (S[key].rot + 1) % 4;
-  clampFurniture();
-  render();
+function rotF(key){if(S[key]){S[key].rot=(S[key].rot+1)%4;clampObj(key);render();}}
+function mirrorSofa(){S.sofa.mirror=!S.sofa.mirror;render();}
+
+function updateSelInfo(){
+  if(!S.sel){selEl.classList.remove('show');return;}
+  selEl.classList.add('show');
+  const names={sofa:'Canapé en L',table:'Table SAM',ct:'Table Basse',tv:'Meuble TV',bay:'Baie vitrée'};
+  let label=names[S.sel]||'';
+  if(S.sel.startsWith('ch:'))label='Chaise '+(+S.sel.split(':')[1]+1);
+  if(S.sel.startsWith('door:')){const d=S.doors.find(x=>x.id===+S.sel.split(':')[1]);label=d?d.label:'Porte';}
+  const obj=getSelObj(S.sel);
+  if(!obj){selEl.innerHTML=`<b>${label}</b>`;return;}
+  if(obj._wallItem){
+    selEl.innerHTML=`<b>${label}</b> — position: ${Math.round(obj.pos)} cm`;
+  } else {
+    const rw=S.room.w,rh=S.room.h;
+    let hw,hh;
+    if(S.sel==='sofa'){const r=S.sofa.rot%2===0;hw=(r?S.sofa.shortArm:S.sofa.longArm)/2;hh=(r?S.sofa.longArm:S.sofa.shortArm)/2;}
+    else if(S.sel.startsWith('ch:')){hw=S.chairSz/2;hh=hw;}
+    else{const o=S[S.sel]||obj;const r2=(o.rot||0)%2===0;hw=(r2?o.w:o.h)/2;hh=(r2?o.h:o.w)/2;}
+    const dL=Math.round(obj.cx-hw),dT=Math.round(obj.cy-hh),dR=Math.round(rw-obj.cx-hw),dB=Math.round(rh-obj.cy-hh);
+    selEl.innerHTML=`<b>${label}</b> — ↤${dL} ↥${dT} ↦${dR} ↧${dB} cm`;
+  }
 }
 
-function mirrorSofa() {
-  S.sofa.mirror = !S.sofa.mirror;
-  render();
-}
+/* ── DOOR CONTROLS ── */
 
-function updateSelInfo() {
-  if (!S.selected) { selInfo.classList.remove('show'); return; }
-  selInfo.classList.add('show');
-  const obj = S[S.selected];
-  const names = { sofa: 'Canapé en L', table: 'Table SAM', ct: 'Table Basse' };
-  const distL = Math.round(obj.cx - (S.selected === 'sofa' ? sofaBBox().w / 2 : rectBBox(obj).w / 2));
-  const distT = Math.round(obj.cy - (S.selected === 'sofa' ? sofaBBox().h / 2 : rectBBox(obj).h / 2));
-  const distR = Math.round(S.room.w - obj.cx - (S.selected === 'sofa' ? sofaBBox().w / 2 : rectBBox(obj).w / 2));
-  const distB = Math.round(S.room.h - obj.cy - (S.selected === 'sofa' ? sofaBBox().h / 2 : rectBBox(obj).h / 2));
-  selInfo.innerHTML = `<b>${names[S.selected]}</b> — ` +
-    `↤ ${distL}cm &nbsp; ↥ ${distT}cm &nbsp; ↦ ${distR}cm &nbsp; ↧ ${distB}cm`;
-}
-
-function bindControl(id, getter, setter, formatter) {
-  const el = $(id);
-  const val = $(id + '-v');
-  el.addEventListener('input', () => {
-    setter(+el.value);
-    val.textContent = formatter(+el.value);
-    clampFurniture();
-    render();
+function renderDoorCards(){
+  const cont=$('doors-list');cont.innerHTML='';
+  S.doors.forEach(d=>{
+    const div=document.createElement('div');
+    div.className='door-card'+(S.sel==='door:'+d.id?' sel':'');
+    div.innerHTML=`<div class="dc-top">
+      <input type="text" value="${d.label}" onchange="updDoorLabel(${d.id},this.value)">
+      <select onchange="updDoorWall(${d.id},this.value)">
+        <option value="top"${d.wall==='top'?' selected':''}>Haut</option>
+        <option value="bottom"${d.wall==='bottom'?' selected':''}>Bas</option>
+        <option value="left"${d.wall==='left'?' selected':''}>Gauche</option>
+        <option value="right"${d.wall==='right'?' selected':''}>Droite</option>
+      </select>
+      <button class="dc-del" onclick="rmDoor(${d.id})">×</button>
+    </div>
+    <div class="dc-range">
+      <input type="range" min="40" max="250" step="5" value="${d.width}" oninput="updDoorW(${d.id},+this.value,this)">
+      <span class="v">${d.width} cm</span>
+    </div>`;
+    cont.appendChild(div);
   });
-  el.value = getter();
-  val.textContent = formatter(getter());
 }
 
-function initControls() {
-  bindControl('room-w', () => S.room.w, v => S.room.w = v, v => (v / 100).toFixed(2) + ' m');
-  bindControl('room-h', () => S.room.h, v => S.room.h = v, v => (v / 100).toFixed(2) + ' m');
-  bindControl('sofa-long', () => S.sofa.longArm, v => S.sofa.longArm = v, v => v + ' cm');
-  bindControl('sofa-short', () => S.sofa.shortArm, v => S.sofa.shortArm = v, v => v + ' cm');
-  bindControl('sofa-depth', () => S.sofa.depth, v => S.sofa.depth = v, v => v + ' cm');
-  bindControl('table-w', () => S.table.w, v => S.table.w = v, v => v + ' cm');
-  bindControl('table-h', () => S.table.h, v => S.table.h = v, v => v + ' cm');
-  bindControl('table-chairs', () => S.table.chairs, v => S.table.chairs = v, v => '' + v);
-  bindControl('ct-w', () => S.ct.w, v => S.ct.w = v, v => v + ' cm');
-  bindControl('ct-h', () => S.ct.h, v => S.ct.h = v, v => v + ' cm');
-
-  $('opt-grid').addEventListener('change', e => { S.showGrid = e.target.checked; render(); });
-  $('opt-dims').addEventListener('change', e => { S.showDims = e.target.checked; render(); });
+function updDoorLabel(id,v){const d=S.doors.find(x=>x.id===id);if(d)d.label=v;render();}
+function updDoorWall(id,w){const d=S.doors.find(x=>x.id===id);if(d){d.wall=w;clampDoor(d);render();renderDoorCards();}}
+function updDoorW(id,w,el){const d=S.doors.find(x=>x.id===id);if(d){d.width=w;clampDoor(d);el.parentElement.querySelector('.v').textContent=w+' cm';render();}}
+function rmDoor(id){S.doors=S.doors.filter(x=>x.id!==id);if(S.sel==='door:'+id)S.sel=null;renderDoorCards();render();}
+function addDoor(){
+  const wall=$('new-door-wall').value;
+  const d={id:S.nxDoor++,label:'Porte',wall,pos:0,width:80};
+  clampDoor(d);S.doors.push(d);renderDoorCards();render();
+}
+function syncDoorCard(d){
+  /* live update during drag — no-op for performance, selInfo shows position */
 }
 
-function syncControlsToState() {
-  $('room-w').value = S.room.w; $('room-w-v').textContent = (S.room.w / 100).toFixed(2) + ' m';
-  $('room-h').value = S.room.h; $('room-h-v').textContent = (S.room.h / 100).toFixed(2) + ' m';
-  $('sofa-long').value = S.sofa.longArm; $('sofa-long-v').textContent = S.sofa.longArm + ' cm';
-  $('sofa-short').value = S.sofa.shortArm; $('sofa-short-v').textContent = S.sofa.shortArm + ' cm';
-  $('sofa-depth').value = S.sofa.depth; $('sofa-depth-v').textContent = S.sofa.depth + ' cm';
-  $('table-w').value = S.table.w; $('table-w-v').textContent = S.table.w + ' cm';
-  $('table-h').value = S.table.h; $('table-h-v').textContent = S.table.h + ' cm';
-  $('table-chairs').value = S.table.chairs; $('table-chairs-v').textContent = S.table.chairs;
-  $('ct-w').value = S.ct.w; $('ct-w-v').textContent = S.ct.w + ' cm';
-  $('ct-h').value = S.ct.h; $('ct-h-v').textContent = S.ct.h + ' cm';
-  $('opt-grid').checked = S.showGrid;
-  $('opt-dims').checked = S.showDims;
+/* ── BAY CONTROLS ── */
+
+function syncBayControls(){
+  $('bay-pos').value=S.bay.pos;$('bay-pos-v').textContent=Math.round(S.bay.pos)+' cm';
+  $('bay-len').value=S.bay.len;$('bay-len-v').textContent=S.bay.len+' cm';
+  $('bay-wall').value=S.bay.wall;
 }
 
-function resetAll() {
-  const d = defaults();
-  Object.assign(S, d);
-  syncControlsToState();
-  render();
+/* ── CONTROLS BINDING ── */
+
+function bind(id,get,set,fmt){
+  const el=$(id),vl=$(id+'-v');
+  el.addEventListener('input',()=>{set(+el.value);vl.textContent=fmt(+el.value);clampAll();render();});
+  el.value=get();vl.textContent=fmt(get());
 }
 
-window.addEventListener('resize', render);
+function clampAll(){
+  clampBay();
+  S.doors.forEach(d=>clampDoor(d));
+  ['sofa','table','ct','tv'].forEach(k=>clampObj(k));
+  S.chairs.forEach((_,i)=>clampChair(i));
+}
+
+function initControls(){
+  bind('room-w',()=>S.room.w,v=>S.room.w=v,v=>(v/100).toFixed(2)+' m');
+  bind('room-h',()=>S.room.h,v=>S.room.h=v,v=>(v/100).toFixed(2)+' m');
+  bind('bay-pos',()=>S.bay.pos,v=>S.bay.pos=v,v=>Math.round(v)+' cm');
+  bind('bay-len',()=>S.bay.len,v=>S.bay.len=v,v=>v+' cm');
+  bind('tv-w',()=>S.tv.w,v=>S.tv.w=v,v=>v+' cm');
+  bind('tv-h',()=>S.tv.h,v=>S.tv.h=v,v=>v+' cm');
+  bind('sofa-long',()=>S.sofa.longArm,v=>S.sofa.longArm=v,v=>v+' cm');
+  bind('sofa-short',()=>S.sofa.shortArm,v=>S.sofa.shortArm=v,v=>v+' cm');
+  bind('sofa-depth',()=>S.sofa.depth,v=>S.sofa.depth=v,v=>v+' cm');
+  bind('tab-w',()=>S.table.w,v=>S.table.w=v,v=>v+' cm');
+  bind('tab-h',()=>S.table.h,v=>S.table.h=v,v=>v+' cm');
+  bind('ct-w',()=>S.ct.w,v=>S.ct.w=v,v=>v+' cm');
+  bind('ct-h',()=>S.ct.h,v=>S.ct.h=v,v=>v+' cm');
+
+  const chN=$('ch-n'),chNv=$('ch-n-v');
+  chN.value=S.chairN;chNv.textContent=S.chairN;
+  chN.addEventListener('input',()=>{S.chairN=+chN.value;chNv.textContent=chN.value;placeChairs();render();});
+
+  const chSz=$('ch-sz'),chSzv=$('ch-sz-v');
+  chSz.value=S.chairSz;chSzv.textContent=S.chairSz+' cm';
+  chSz.addEventListener('input',()=>{S.chairSz=+chSz.value;chSzv.textContent=chSz.value+' cm';render();});
+
+  $('bay-wall').value=S.bay.wall;
+  $('bay-wall').addEventListener('change',()=>{S.bay.wall=$('bay-wall').value;clampBay();syncBayControls();render();});
+}
+
+function syncAllControls(){
+  $('room-w').value=S.room.w;$('room-w-v').textContent=(S.room.w/100).toFixed(2)+' m';
+  $('room-h').value=S.room.h;$('room-h-v').textContent=(S.room.h/100).toFixed(2)+' m';
+  syncBayControls();
+  $('tv-w').value=S.tv.w;$('tv-w-v').textContent=S.tv.w+' cm';
+  $('tv-h').value=S.tv.h;$('tv-h-v').textContent=S.tv.h+' cm';
+  $('sofa-long').value=S.sofa.longArm;$('sofa-long-v').textContent=S.sofa.longArm+' cm';
+  $('sofa-short').value=S.sofa.shortArm;$('sofa-short-v').textContent=S.sofa.shortArm+' cm';
+  $('sofa-depth').value=S.sofa.depth;$('sofa-depth-v').textContent=S.sofa.depth+' cm';
+  $('tab-w').value=S.table.w;$('tab-w-v').textContent=S.table.w+' cm';
+  $('tab-h').value=S.table.h;$('tab-h-v').textContent=S.table.h+' cm';
+  $('ch-n').value=S.chairN;$('ch-n-v').textContent=S.chairN;
+  $('ch-sz').value=S.chairSz;$('ch-sz-v').textContent=S.chairSz+' cm';
+  $('ct-w').value=S.ct.w;$('ct-w-v').textContent=S.ct.w+' cm';
+  $('ct-h').value=S.ct.h;$('ct-h-v').textContent=S.ct.h+' cm';
+  $('opt-grid').checked=S.showGrid;$('opt-dims').checked=S.showDims;
+  renderDoorCards();
+}
+
+function resetAll(){
+  const d=mkDefaults();Object.assign(S,d);placeChairs();syncAllControls();render();
+}
+
+/* ── INIT ── */
+window.addEventListener('resize',render);
 initControls();
+placeChairs();
+renderDoorCards();
 render();
 </script>
 </body>
