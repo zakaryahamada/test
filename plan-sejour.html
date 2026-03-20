@@ -3,248 +3,841 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan Séjour - Disposition Salon + SAM</title>
+<title>Aménagement Séjour Interactif</title>
 <style>
-  body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #f5f5f5;
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
-  .container {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-    padding: 32px;
-  }
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 8px;
-  }
-  .subtitle {
-    text-align: center;
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  .legend {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 16px;
-    font-size: 13px;
-    color: #555;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .legend-color {
-    width: 18px;
-    height: 14px;
-    border-radius: 3px;
-    border: 1px solid rgba(0,0,0,0.15);
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;overflow:hidden;height:100vh}
+#app{display:flex;height:100vh}
+
+/* ── Sidebar ── */
+#sidebar{width:300px;min-width:300px;background:linear-gradient(180deg,#1e293b,#0f172a);
+  border-right:1px solid #334155;overflow-y:auto;padding:0 0 24px}
+#sidebar::-webkit-scrollbar{width:6px}
+#sidebar::-webkit-scrollbar-thumb{background:#475569;border-radius:3px}
+.logo{padding:20px 20px 12px;font-size:18px;font-weight:700;color:#f8fafc;
+  border-bottom:1px solid #334155;display:flex;align-items:center;gap:8px}
+.logo span{font-size:22px}
+
+.section{border-bottom:1px solid #1e293b}
+.section-header{display:flex;align-items:center;gap:8px;padding:14px 20px 6px;
+  font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;user-select:none}
+.section-header .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.section-body{padding:4px 20px 14px}
+
+.ctrl{margin-bottom:10px}
+.ctrl label{display:block;font-size:12px;color:#94a3b8;margin-bottom:4px}
+.ctrl-row{display:flex;align-items:center;gap:8px}
+.ctrl-row input[type=range]{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;
+  background:#334155;outline:none}
+.ctrl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;
+  border-radius:50%;background:#60a5fa;cursor:pointer;border:2px solid #1e293b}
+.ctrl-row .val{min-width:62px;text-align:right;font-size:13px;font-weight:600;
+  color:#f1f5f9;font-variant-numeric:tabular-nums}
+
+.btn-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.btn{padding:6px 14px;border:1px solid #475569;border-radius:6px;background:#1e293b;
+  color:#cbd5e1;font-size:12px;cursor:pointer;transition:all .15s;user-select:none}
+.btn:hover{background:#334155;color:#f1f5f9;border-color:#60a5fa}
+.btn:active{transform:scale(.96)}
+.btn.active{background:#1e40af;border-color:#3b82f6;color:white}
+
+.check-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px;color:#94a3b8}
+.check-row input{accent-color:#60a5fa}
+
+.info{padding:12px 20px;font-size:11px;color:#64748b;line-height:1.6}
+
+/* ── Main ── */
+#main{flex:1;position:relative;background:#0f172a;display:flex;align-items:center;justify-content:center}
+canvas{display:block;border-radius:8px}
+#tip{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+  background:rgba(30,41,59,.85);color:#94a3b8;padding:8px 18px;border-radius:20px;
+  font-size:12px;pointer-events:none;backdrop-filter:blur(8px);white-space:nowrap}
+#sel-info{position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  background:rgba(30,41,59,.9);color:#e2e8f0;padding:8px 18px;border-radius:8px;
+  font-size:13px;pointer-events:none;backdrop-filter:blur(8px);min-width:200px;text-align:center;
+  opacity:0;transition:opacity .2s}
+#sel-info.show{opacity:1}
 </style>
 </head>
 <body>
-<div class="container">
-  <h2>Plan Séjour 4.82 × 5.13 m</h2>
-  <p class="subtitle">Disposition Salon en L + Salle à Manger 6 places</p>
+<div id="app">
+<aside id="sidebar">
+  <div class="logo"><span>⊞</span> Aménagement Séjour</div>
 
-  <svg width="640" height="720" viewBox="0 0 640 720" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-        <line x1="0" y1="0" x2="0" y2="6" stroke="#ccc" stroke-width="1"/>
-      </pattern>
-      <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
-        <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.12"/>
-      </filter>
-    </defs>
-
-    <!-- Scale: 1m = ~105px (5.13m -> ~540px width, 4.82m -> ~506px height) -->
-    <!-- Room offset: x=60, y=60 -->
-    <!-- Room interior: 540 x 506 -->
-
-    <!-- Floor -->
-    <rect x="60" y="60" width="540" height="506" fill="#fafaf7" stroke="none"/>
-
-    <!-- Walls (thick) -->
-    <rect x="50" y="50" width="560" height="526" fill="none" stroke="#333" stroke-width="10" rx="2"/>
-
-    <!-- Dimensions extérieures -->
-    <!-- Largeur 5.13m en haut -->
-    <line x1="60" y1="35" x2="600" y2="35" stroke="#999" stroke-width="1"/>
-    <line x1="60" y1="30" x2="60" y2="40" stroke="#999" stroke-width="1"/>
-    <line x1="600" y1="30" x2="600" y2="40" stroke="#999" stroke-width="1"/>
-    <text x="330" y="28" text-anchor="middle" font-size="13" fill="#666">5.13 m</text>
-
-    <!-- Hauteur 4.82m à droite -->
-    <line x1="618" y1="60" x2="618" y2="566" stroke="#999" stroke-width="1"/>
-    <line x1="613" y1="60" x2="623" y2="60" stroke="#999" stroke-width="1"/>
-    <line x1="613" y1="566" x2="623" y2="566" stroke="#999" stroke-width="1"/>
-    <text x="635" y="318" text-anchor="middle" font-size="13" fill="#666" transform="rotate(90,635,318)">4.82 m</text>
-
-    <!-- ===== OUVERTURES ===== -->
-
-    <!-- Baie vitrée (mur gauche, milieu-haut) -->
-    <rect x="46" y="140" width="18" height="160" fill="#a8dce8" stroke="#5bb8d4" stroke-width="2" rx="2"/>
-    <text x="28" y="225" text-anchor="middle" font-size="11" fill="#3a8fa3" transform="rotate(-90,28,225)">Baie vitrée</text>
-
-    <!-- Branchement TV (mur haut) -->
-    <rect x="250" y="50" width="160" height="8" fill="#e8c840" stroke="#c4a830" stroke-width="1" rx="2"/>
-    <text x="330" y="46" text-anchor="middle" font-size="11" fill="#998520">Branchement TV</text>
-
-    <!-- Entrée principale (mur bas, centre-gauche) -->
-    <rect x="195" y="568" width="100" height="12" fill="white" stroke="#333" stroke-width="2"/>
-    <!-- Arc de porte -->
-    <path d="M 195 575 Q 195 635, 255 635" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
-    <text x="245" y="600" text-anchor="middle" font-size="11" fill="#666">Entrée principale</text>
-
-    <!-- Porte cuisine (mur bas gauche) -->
-    <rect x="60" y="530" width="70" height="12" fill="white" stroke="#333" stroke-width="2"/>
-    <path d="M 60 540 Q 60 590, 110 590" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
-    <text x="95" y="560" text-anchor="middle" font-size="10" fill="#666">Porte cuisine</text>
-
-    <!-- Couloir (mur bas droite) -->
-    <rect x="370" y="568" width="230" height="12" fill="url(#hatch)" stroke="#333" stroke-width="1"/>
-    <text x="485" y="560" text-anchor="middle" font-size="11" fill="#888">Couloir</text>
-
-    <!-- Hall -->
-    <text x="155" y="500" text-anchor="middle" font-size="12" fill="#aaa">Hall</text>
-
-    <!-- ===== MEUBLES ===== -->
-
-    <!-- === MEUBLE TV === -->
-    <rect x="230" y="62" width="200" height="40" rx="4" fill="#8B7355" stroke="#6b5535" stroke-width="1.5" filter="url(#shadow)"/>
-    <text x="330" y="86" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Meuble TV</text>
-    <!-- TV -->
-    <rect x="260" y="66" width="140" height="6" rx="2" fill="#333"/>
-
-    <!-- === CANAPÉ EN L === -->
-    <!-- Grande assise (parallèle mur droit) -->
-    <rect x="390" y="130" width="90" height="230" rx="8" fill="#5B8C6E" stroke="#3d6b4e" stroke-width="1.5" filter="url(#shadow)"/>
-    <!-- Coussins dossier grande assise -->
-    <rect x="455" y="140" width="18" height="65" rx="4" fill="#4a7a5c"/>
-    <rect x="455" y="215" width="18" height="65" rx="4" fill="#4a7a5c"/>
-    <rect x="455" y="290" width="18" height="60" rx="4" fill="#4a7a5c"/>
-    <!-- Coussins assise -->
-    <rect x="398" y="140" width="50" height="100" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
-    <rect x="398" y="248" width="50" height="100" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
-
-    <!-- Retour du L (vers le centre) -->
-    <rect x="240" y="270" width="158" height="90" rx="8" fill="#5B8C6E" stroke="#3d6b4e" stroke-width="1.5" filter="url(#shadow)"/>
-    <!-- Coussins dossier retour -->
-    <rect x="250" y="335" width="60" height="18" rx="4" fill="#4a7a5c"/>
-    <rect x="320" y="335" width="60" height="18" rx="4" fill="#4a7a5c"/>
-    <!-- Coussin assise retour -->
-    <rect x="250" y="278" width="55" height="50" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
-    <rect x="313" y="278" width="55" height="50" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
-
-    <!-- Label canapé -->
-    <text x="370" y="210" text-anchor="middle" font-size="13" fill="white" font-weight="bold" transform="rotate(-90,420,210)">Canapé</text>
-    <text x="320" y="315" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Retour L</text>
-
-    <!-- === TABLE BASSE === -->
-    <rect x="280" y="170" width="90" height="55" rx="6" fill="#C4A265" stroke="#a88945" stroke-width="1.5" filter="url(#shadow)"/>
-    <text x="325" y="202" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Table basse</text>
-
-    <!-- === TAPIS sous salon === -->
-    <rect x="220" y="120" width="280" height="260" rx="6" fill="none" stroke="#c0a87e" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.6"/>
-    <text x="230" y="375" font-size="10" fill="#b89e6e" font-style="italic">Tapis</text>
-
-    <!-- === TABLE À MANGER === -->
-    <rect x="100" y="400" width="170" height="90" rx="6" fill="#A0522D" stroke="#7a3e1f" stroke-width="1.5" filter="url(#shadow)"/>
-    <text x="185" y="450" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Table SAM</text>
-    <text x="185" y="466" text-anchor="middle" font-size="10" fill="#f0d8c0">160 × 90 cm</text>
-
-    <!-- Chaises (6 au total) -->
-    <!-- Chaise haut gauche -->
-    <rect x="125" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-    <!-- Chaise haut milieu -->
-    <rect x="170" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-    <!-- Chaise haut droite -->
-    <rect x="215" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-
-    <!-- Chaise bas gauche -->
-    <rect x="125" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-    <!-- Chaise bas milieu -->
-    <rect x="170" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-    <!-- Chaise bas droite -->
-    <rect x="215" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
-
-    <!-- Labels chaises -->
-    <text x="185" y="380" text-anchor="middle" font-size="9" fill="#a04e15">○ ○ ○</text>
-    <text x="185" y="518" text-anchor="middle" font-size="9" fill="#a04e15">○ ○ ○</text>
-
-    <!-- === FLUX DE CIRCULATION (flèches) === -->
-    <path d="M 245 575 L 245 520 Q 245 505, 260 505 L 380 505 Q 395 505, 395 490 L 395 400"
-          fill="none" stroke="#ddd" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowhead)"/>
-
-    <defs>
-      <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-        <polygon points="0 0, 8 3, 0 6" fill="#ccc"/>
-      </marker>
-    </defs>
-
-    <!-- Circulation label -->
-    <text x="340" y="495" text-anchor="middle" font-size="9" fill="#bbb" font-style="italic">circulation</text>
-
-    <!-- Flèche lumière baie vitrée -->
-    <line x1="68" y1="180" x2="130" y2="180" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#sunArrow)"/>
-    <line x1="68" y1="210" x2="150" y2="210" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3"/>
-    <line x1="68" y1="240" x2="140" y2="240" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3"/>
-    <text x="110" y="265" font-size="9" fill="#c4a830" font-style="italic">lumière ☀</text>
-
-    <defs>
-      <marker id="sunArrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
-        <polygon points="0 0, 6 2.5, 0 5" fill="#e8c840"/>
-      </marker>
-    </defs>
-
-    <!-- === COTES INTÉRIEURES meubles === -->
-    <!-- Distance canapé - mur droit ~60cm -->
-    <line x1="482" y1="150" x2="540" y2="150" stroke="#aaa" stroke-width="0.8"/>
-    <text x="510" y="145" text-anchor="middle" font-size="9" fill="#999">~60cm</text>
-
-    <!-- Distance table - porte cuisine -->
-    <line x1="100" y1="495" x2="100" y2="535" stroke="#aaa" stroke-width="0.8"/>
-    <text x="86" y="520" text-anchor="middle" font-size="9" fill="#999" transform="rotate(-90,86,520)">~80cm</text>
-
-  </svg>
-
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-color" style="background:#5B8C6E"></div>
-      <span>Canapé en L</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color" style="background:#C4A265"></div>
-      <span>Table basse</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color" style="background:#A0522D"></div>
-      <span>Table SAM (160×90)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color" style="background:#D2691E"></div>
-      <span>Chaises (×6)</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color" style="background:#a8dce8"></div>
-      <span>Baie vitrée</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-color" style="background:#e8c840"></div>
-      <span>Branchement TV</span>
+  <div class="section">
+    <div class="section-header"><div class="dot" style="background:#fbbf24"></div> Dimensions Séjour</div>
+    <div class="section-body">
+      <div class="ctrl">
+        <label>Largeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="room-w" min="300" max="900" step="1" value="513">
+          <span class="val" id="room-w-v">5.13 m</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Profondeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="room-h" min="300" max="900" step="1" value="482">
+          <span class="val" id="room-h-v">4.82 m</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="section">
+    <div class="section-header"><div class="dot" style="background:#4ade80"></div> Canapé en L</div>
+    <div class="section-body">
+      <div class="ctrl">
+        <label>Grand côté</label>
+        <div class="ctrl-row">
+          <input type="range" id="sofa-long" min="150" max="350" step="5" value="230">
+          <span class="val" id="sofa-long-v">230 cm</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Petit côté (retour)</label>
+        <div class="ctrl-row">
+          <input type="range" id="sofa-short" min="80" max="250" step="5" value="160">
+          <span class="val" id="sofa-short-v">160 cm</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Profondeur assise</label>
+        <div class="ctrl-row">
+          <input type="range" id="sofa-depth" min="50" max="120" step="5" value="90">
+          <span class="val" id="sofa-depth-v">90 cm</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="rotateFurniture('sofa')">↻ Tourner</button>
+        <button class="btn" onclick="mirrorSofa()">⇔ Retourner</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="dot" style="background:#f97316"></div> Table SAM</div>
+    <div class="section-body">
+      <div class="ctrl">
+        <label>Largeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="table-w" min="80" max="260" step="5" value="160">
+          <span class="val" id="table-w-v">160 cm</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Profondeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="table-h" min="60" max="140" step="5" value="90">
+          <span class="val" id="table-h-v">90 cm</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Nombre de chaises</label>
+        <div class="ctrl-row">
+          <input type="range" id="table-chairs" min="2" max="10" step="1" value="6">
+          <span class="val" id="table-chairs-v">6</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="rotateFurniture('table')">↻ Tourner</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="dot" style="background:#c4a265"></div> Table Basse</div>
+    <div class="section-body">
+      <div class="ctrl">
+        <label>Largeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="ct-w" min="40" max="150" step="5" value="110">
+          <span class="val" id="ct-w-v">110 cm</span>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Profondeur</label>
+        <div class="ctrl-row">
+          <input type="range" id="ct-h" min="30" max="100" step="5" value="55">
+          <span class="val" id="ct-h-v">55 cm</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="rotateFurniture('ct')">↻ Tourner</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="dot" style="background:#60a5fa"></div> Options</div>
+    <div class="section-body">
+      <label class="check-row"><input type="checkbox" id="opt-grid" checked> Afficher la grille</label>
+      <label class="check-row"><input type="checkbox" id="opt-dims" checked> Afficher les cotes</label>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn" onclick="resetAll()">⟲ Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="info">
+    <b>Utilisation :</b><br>
+    • Glissez les meubles pour les déplacer<br>
+    • Cliquez un meuble pour le sélectionner<br>
+    • Touches fléchées : déplacement fin<br>
+    • R : tourner &nbsp; M : retourner (canapé)
+  </div>
+</aside>
+
+<main id="main">
+  <canvas id="canvas"></canvas>
+  <div id="tip">Glissez les meubles pour les repositionner</div>
+  <div id="sel-info"></div>
+</main>
 </div>
+
+<script>
+const $ = id => document.getElementById(id);
+const canvas = $('canvas');
+const ctx = canvas.getContext('2d');
+const selInfo = $('sel-info');
+
+const WALL = 12;
+const CHAIR_R = 18;
+const COLORS = {
+  floor: '#fefce8', wall: '#334155', wallStroke: '#1e293b',
+  grid: '#e5e7cb',
+  sofa: '#3d8b58', sofaLight: '#5bbd78', sofaSeat: '#4aa564', sofaBack: '#2d6b42',
+  table: '#8B5E3C', tableTop: '#A0522D', tableBorder: '#6b3e1f',
+  chair: '#c4813a', chairBorder: '#8B5E3C',
+  ct: '#bfa261', ctTop: '#d4b87a', ctBorder: '#96803e',
+  bayWindow: '#7ec8e3', tvPlug: '#eab308',
+  opening: '#fefce8', door: '#94a3b8',
+  selected: '#3b82f6', hover: '#60a5fa',
+  dimLine: '#64748b', dimText: '#475569'
+};
+
+function defaults() {
+  return {
+    room: { w: 513, h: 482 },
+    sofa: { cx: 370, cy: 195, longArm: 230, shortArm: 160, depth: 90, rot: 0, mirror: false },
+    table: { cx: 165, cy: 400, w: 160, h: 90, rot: 0, chairs: 6 },
+    ct: { cx: 270, cy: 195, w: 110, h: 55, rot: 0 },
+    showGrid: true, showDims: true,
+    selected: null, dragging: false, hover: null,
+    dragOff: { x: 0, y: 0 },
+    scale: 1, ox: 0, oy: 0
+  };
+}
+let S = defaults();
+
+function computeLayout() {
+  const pad = 60;
+  const cw = canvas.width, ch = canvas.height;
+  const scaleX = (cw - pad * 2) / (S.room.w + WALL * 2);
+  const scaleY = (ch - pad * 2) / (S.room.h + WALL * 2);
+  S.scale = Math.min(scaleX, scaleY);
+  S.ox = (cw - S.room.w * S.scale) / 2;
+  S.oy = (ch - S.room.h * S.scale) / 2;
+}
+
+function cmToPx(cx, cy) {
+  return [S.ox + cx * S.scale, S.oy + cy * S.scale];
+}
+function pxToCm(px, py) {
+  return [(px - S.ox) / S.scale, (py - S.oy) / S.scale];
+}
+
+function sofaBBox() {
+  const s = S.sofa;
+  const r = s.rot % 2 === 0;
+  const bw = r ? s.shortArm : s.longArm;
+  const bh = r ? s.longArm : s.shortArm;
+  return { x: s.cx - bw / 2, y: s.cy - bh / 2, w: bw, h: bh };
+}
+function rectBBox(obj) {
+  const r = obj.rot % 2 === 0;
+  const bw = r ? obj.w : obj.h;
+  const bh = r ? obj.h : obj.w;
+  return { x: obj.cx - bw / 2, y: obj.cy - bh / 2, w: bw, h: bh };
+}
+
+function drawRoom() {
+  const sc = S.scale, ox = S.ox, oy = S.oy, rw = S.room.w, rh = S.room.h;
+
+  if (S.showGrid) {
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 0.5;
+    const step = 50;
+    for (let x = step; x < rw; x += step) {
+      const px = ox + x * sc;
+      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
+    }
+    for (let y = step; y < rh; y += step) {
+      const py = oy + y * sc;
+      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
+    }
+  }
+
+  ctx.fillStyle = COLORS.floor;
+  ctx.fillRect(ox, oy, rw * sc, rh * sc);
+
+  if (S.showGrid) {
+    ctx.strokeStyle = '#d5d6b8';
+    ctx.lineWidth = 0.3;
+    const step = 50;
+    for (let x = step; x < rw; x += step) {
+      const px = ox + x * sc;
+      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
+    }
+    for (let y = step; y < rh; y += step) {
+      const py = oy + y * sc;
+      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
+    }
+    ctx.strokeStyle = '#c8c9a6';
+    ctx.lineWidth = 0.6;
+    for (let x = 100; x < rw; x += 100) {
+      const px = ox + x * sc;
+      ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy + rh * sc); ctx.stroke();
+    }
+    for (let y = 100; y < rh; y += 100) {
+      const py = oy + y * sc;
+      ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox + rw * sc, py); ctx.stroke();
+    }
+  }
+
+  const wt = WALL * sc;
+  ctx.fillStyle = COLORS.wall;
+  ctx.fillRect(ox - wt, oy - wt, rw * sc + wt * 2, wt);
+  ctx.fillRect(ox - wt, oy + rh * sc, rw * sc + wt * 2, wt);
+  ctx.fillRect(ox - wt, oy, wt, rh * sc);
+  ctx.fillRect(ox + rw * sc, oy, wt, rh * sc);
+
+  const bvFrom = rh * 0.16, bvTo = rh * 0.48;
+  ctx.fillStyle = COLORS.bayWindow;
+  ctx.fillRect(ox - wt, oy + bvFrom * sc, wt, (bvTo - bvFrom) * sc);
+  ctx.fillStyle = '#bae6fd';
+  ctx.fillRect(ox - wt + 2, oy + bvFrom * sc + 2, wt - 4, (bvTo - bvFrom) * sc - 4);
+  ctx.strokeStyle = '#0ea5e9';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(ox - wt, oy + bvFrom * sc, wt, (bvTo - bvFrom) * sc);
+
+  ctx.save();
+  ctx.translate(ox - wt - 6, oy + (bvFrom + bvTo) / 2 * sc);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#0284c7';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Baie vitrée', 0, 0);
+  ctx.restore();
+
+  const tvFrom = rw * 0.35, tvTo = rw * 0.65;
+  ctx.fillStyle = COLORS.tvPlug;
+  ctx.fillRect(ox + tvFrom * sc, oy - wt, (tvTo - tvFrom) * sc, wt);
+  ctx.fillStyle = '#fde047';
+  ctx.fillRect(ox + tvFrom * sc + 2, oy - wt + 2, (tvTo - tvFrom) * sc - 4, wt - 4);
+  ctx.fillStyle = '#a16207';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Branchement TV', ox + (tvFrom + tvTo) / 2 * sc, oy - wt - 6);
+
+  const epFrom = rw * 0.32, epTo = rw * 0.52;
+  ctx.fillStyle = COLORS.floor;
+  ctx.fillRect(ox + epFrom * sc, oy + rh * sc, (epTo - epFrom) * sc, wt);
+  ctx.strokeStyle = COLORS.door;
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(ox + epFrom * sc, oy + rh * sc, (epTo - epFrom) * sc, wt);
+  ctx.beginPath();
+  ctx.arc(ox + epFrom * sc, oy + rh * sc + wt, (epTo - epFrom) * sc * 0.7, -Math.PI / 2, 0);
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#64748b';
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Entrée principale', ox + (epFrom + epTo) / 2 * sc, oy + rh * sc + wt + 16);
+
+  const pcTo = rw * 0.14;
+  ctx.fillStyle = COLORS.floor;
+  ctx.fillRect(ox, oy + rh * sc, pcTo * sc, wt);
+  ctx.strokeStyle = COLORS.door;
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(ox, oy + rh * sc, pcTo * sc, wt);
+  ctx.beginPath();
+  ctx.arc(ox, oy + rh * sc + wt, pcTo * sc * 0.7, -Math.PI / 2, 0);
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#64748b';
+  ctx.font = '10px sans-serif';
+  ctx.fillText('Cuisine', ox + pcTo / 2 * sc, oy + rh * sc + wt + 16);
+
+  const coFrom = rw * 0.60;
+  ctx.fillStyle = '#e2e8f0';
+  ctx.fillRect(ox + coFrom * sc, oy + rh * sc, (rw - coFrom) * sc, wt);
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(ox + coFrom * sc, oy + rh * sc, (rw - coFrom) * sc, wt);
+  ctx.fillStyle = '#64748b';
+  ctx.font = '10px sans-serif';
+  ctx.fillText('Couloir', ox + (coFrom + rw) / 2 * sc, oy + rh * sc + wt + 16);
+
+  if (S.showDims) {
+    ctx.strokeStyle = COLORS.dimLine;
+    ctx.fillStyle = COLORS.dimText;
+    ctx.font = 'bold 12px sans-serif';
+    ctx.lineWidth = 1;
+    ctx.textAlign = 'center';
+
+    const dy = oy - wt - 22;
+    ctx.beginPath();
+    ctx.moveTo(ox, dy); ctx.lineTo(ox + rw * sc, dy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, dy - 4); ctx.lineTo(ox, dy + 4); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox + rw * sc, dy - 4); ctx.lineTo(ox + rw * sc, dy + 4); ctx.stroke();
+    ctx.fillText((rw / 100).toFixed(2) + ' m', ox + rw * sc / 2, dy - 6);
+
+    const dx = ox + rw * sc + wt + 22;
+    ctx.beginPath();
+    ctx.moveTo(dx, oy); ctx.lineTo(dx, oy + rh * sc); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(dx - 4, oy); ctx.lineTo(dx + 4, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(dx - 4, oy + rh * sc); ctx.lineTo(dx + 4, oy + rh * sc); ctx.stroke();
+    ctx.save();
+    ctx.translate(dx + 14, oy + rh * sc / 2);
+    ctx.rotate(Math.PI / 2);
+    ctx.fillText((rh / 100).toFixed(2) + ' m', 0, 0);
+    ctx.restore();
+  }
+}
+
+function drawLSofa() {
+  const s = S.sofa, sc = S.scale;
+  const [px, py] = cmToPx(s.cx, s.cy);
+  const hw = s.shortArm / 2, hh = s.longArm / 2, d = s.depth;
+
+  ctx.save();
+  ctx.translate(px, py);
+  ctx.rotate(s.rot * Math.PI / 2);
+  if (s.mirror) ctx.scale(-1, 1);
+
+  const x0 = -hw * sc, y0 = -hh * sc;
+  const sa = s.shortArm * sc, la = s.longArm * sc, dd = d * sc;
+
+  const lPath = new Path2D();
+  lPath.moveTo(x0, y0 + la);
+  lPath.lineTo(x0, y0 + la - dd);
+  lPath.lineTo(x0 + sa - dd, y0 + la - dd);
+  lPath.lineTo(x0 + sa - dd, y0);
+  lPath.lineTo(x0 + sa, y0);
+  lPath.lineTo(x0 + sa, y0 + la);
+  lPath.closePath();
+
+  ctx.shadowColor = 'rgba(0,0,0,0.18)';
+  ctx.shadowBlur = 8 * sc / 80;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
+  ctx.fillStyle = COLORS.sofa;
+  ctx.fill(lPath);
+  ctx.shadowColor = 'transparent';
+
+  ctx.strokeStyle = COLORS.sofaBack;
+  ctx.lineWidth = 1.5;
+  ctx.stroke(lPath);
+
+  const inset = 8 * sc / 80;
+  const backW = 18 * sc / 80;
+
+  ctx.fillStyle = COLORS.sofaBack;
+  ctx.fillRect(x0 + sa - dd + inset, y0 + inset, backW, la - dd - inset * 2);
+  ctx.fillRect(x0 + inset, y0 + la - dd + inset, sa - dd - inset, backW);
+
+  ctx.fillStyle = COLORS.sofaSeat;
+  const si = inset + backW + 4 * sc / 80;
+  ctx.beginPath();
+  ctx.roundRect(x0 + si, y0 + la - dd + si, sa - dd - si - inset, dd - si - inset, 4);
+  ctx.fill();
+
+  const vertSeatH = (la - dd - si - inset);
+  const nCush = Math.max(2, Math.round(vertSeatH / (80 * sc)));
+  const cushH = vertSeatH / nCush;
+  for (let i = 0; i < nCush; i++) {
+    ctx.beginPath();
+    ctx.roundRect(x0 + sa - dd + si, y0 + si + i * cushH, dd - si - inset, cushH - 3 * sc / 80, 4);
+    ctx.fill();
+  }
+
+  if (S.selected === 'sofa' || S.hover === 'sofa') {
+    ctx.strokeStyle = S.selected === 'sofa' ? COLORS.selected : COLORS.hover;
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([6, 4]);
+    ctx.stroke(lPath);
+    ctx.setLineDash([]);
+  }
+
+  if (S.showDims && S.selected === 'sofa') {
+    ctx.fillStyle = '#1e293b';
+    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(s.shortArm + ' cm', x0 + sa / 2, y0 + la + 15 * sc / 80);
+    ctx.save();
+    ctx.translate(x0 + sa + 15 * sc / 80, y0 + la / 2);
+    ctx.rotate(Math.PI / 2);
+    ctx.fillText(s.longArm + ' cm', 0, 0);
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
+function drawTable() {
+  const t = S.table, sc = S.scale;
+  const [px, py] = cmToPx(t.cx, t.cy);
+
+  ctx.save();
+  ctx.translate(px, py);
+  ctx.rotate(t.rot * Math.PI / 2);
+
+  const tw = t.w * sc, th = t.h * sc;
+  const x0 = -tw / 2, y0 = -th / 2;
+
+  const nChairs = t.chairs;
+  const longSide = Math.max(t.w, t.h);
+  const shortSide = Math.min(t.w, t.h);
+  const isWide = t.w >= t.h;
+
+  let longCount, shortCount;
+  if (nChairs <= 4) {
+    longCount = 1; shortCount = 1;
+  } else if (nChairs <= 6) {
+    longCount = 2; shortCount = 1;
+  } else if (nChairs <= 8) {
+    longCount = 3; shortCount = 1;
+  } else {
+    longCount = 4; shortCount = 1;
+  }
+
+  const cr = CHAIR_R * sc / 80;
+  const chairGap = 6 * sc / 80;
+
+  function drawChair(cx, cy) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+    ctx.fillStyle = COLORS.chair;
+    ctx.fill();
+    ctx.strokeStyle = COLORS.chairBorder;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+
+  for (let i = 0; i < longCount; i++) {
+    const fx = x0 + tw * (i + 1) / (longCount + 1);
+    drawChair(fx, y0 - cr - chairGap);
+    drawChair(fx, y0 + th + cr + chairGap);
+  }
+  if (shortCount >= 1) {
+    drawChair(x0 - cr - chairGap, 0);
+    drawChair(x0 + tw + cr + chairGap, 0);
+  }
+
+  ctx.shadowColor = 'rgba(0,0,0,0.15)';
+  ctx.shadowBlur = 6 * sc / 80;
+  ctx.shadowOffsetX = 1;
+  ctx.shadowOffsetY = 1;
+  ctx.beginPath();
+  ctx.roundRect(x0, y0, tw, th, 6 * sc / 80);
+  ctx.fillStyle = COLORS.tableTop;
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.strokeStyle = COLORS.tableBorder;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.roundRect(x0 + 6 * sc / 80, y0 + 6 * sc / 80, tw - 12 * sc / 80, th - 12 * sc / 80, 3 * sc / 80);
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  if (S.selected === 'table' || S.hover === 'table') {
+    ctx.strokeStyle = S.selected === 'table' ? COLORS.selected : COLORS.hover;
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.roundRect(x0 - cr - chairGap - 4, y0 - cr - chairGap - 4,
+      tw + (cr + chairGap + 4) * 2, th + (cr + chairGap + 4) * 2, 8);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  if (S.showDims && S.selected === 'table') {
+    ctx.fillStyle = '#1e293b';
+    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(t.w + ' cm', 0, y0 + th + cr + chairGap + 22 * sc / 80);
+    ctx.save();
+    ctx.translate(x0 + tw + cr + chairGap + 18 * sc / 80, 0);
+    ctx.rotate(Math.PI / 2);
+    ctx.fillText(t.h + ' cm', 0, 0);
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
+function drawCoffeeTable() {
+  const c = S.ct, sc = S.scale;
+  const [px, py] = cmToPx(c.cx, c.cy);
+
+  ctx.save();
+  ctx.translate(px, py);
+  ctx.rotate(c.rot * Math.PI / 2);
+
+  const cw = c.w * sc, ch = c.h * sc;
+  const x0 = -cw / 2, y0 = -ch / 2;
+
+  ctx.shadowColor = 'rgba(0,0,0,0.12)';
+  ctx.shadowBlur = 4 * sc / 80;
+  ctx.beginPath();
+  ctx.roundRect(x0, y0, cw, ch, 5 * sc / 80);
+  ctx.fillStyle = COLORS.ct;
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.strokeStyle = COLORS.ctBorder;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.roundRect(x0 + 5 * sc / 80, y0 + 5 * sc / 80, cw - 10 * sc / 80, ch - 10 * sc / 80, 3 * sc / 80);
+  ctx.fillStyle = COLORS.ctTop;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+
+  if (S.selected === 'ct' || S.hover === 'ct') {
+    ctx.strokeStyle = S.selected === 'ct' ? COLORS.selected : COLORS.hover;
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.roundRect(x0 - 4, y0 - 4, cw + 8, ch + 8, 6);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  if (S.showDims && S.selected === 'ct') {
+    ctx.fillStyle = '#1e293b';
+    ctx.font = `bold ${Math.max(10, 11 * sc / 80)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(c.w + ' cm', 0, y0 + ch + 16 * sc / 80);
+  }
+
+  ctx.restore();
+}
+
+function render() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = $('main').getBoundingClientRect();
+  const cw = rect.width, ch = rect.height;
+  canvas.width = cw * dpr;
+  canvas.height = ch * dpr;
+  canvas.style.width = cw + 'px';
+  canvas.style.height = ch + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  computeLayout();
+
+  ctx.clearRect(0, 0, cw, ch);
+  drawRoom();
+  drawCoffeeTable();
+  drawTable();
+  drawLSofa();
+  updateSelInfo();
+}
+
+function pointInLSofa(cmx, cmy) {
+  const s = S.sofa;
+  let lx = cmx - s.cx, ly = cmy - s.cy;
+  const cos = [1, 0, -1, 0][s.rot % 4];
+  const sin = [0, 1, 0, -1][s.rot % 4];
+  let rx = lx * cos + ly * sin;
+  let ry = -lx * sin + ly * cos;
+  if (s.mirror) rx = -rx;
+  const hw = s.shortArm / 2, hh = s.longArm / 2, d = s.depth;
+  const inVert = rx >= hw - d && rx <= hw && ry >= -hh && ry <= hh;
+  const inHoriz = rx >= -hw && rx <= hw && ry >= hh - d && ry <= hh;
+  return inVert || inHoriz;
+}
+
+function pointInRect(cmx, cmy, obj) {
+  let lx = cmx - obj.cx, ly = cmy - obj.cy;
+  const cos = [1, 0, -1, 0][obj.rot % 4];
+  const sin = [0, 1, 0, -1][obj.rot % 4];
+  const rx = lx * cos + ly * sin;
+  const ry = -lx * sin + ly * cos;
+  const hw = obj.w / 2, hh = obj.h / 2;
+  const pad = obj === S.table ? CHAIR_R + 8 : 4;
+  return rx >= -hw - pad && rx <= hw + pad && ry >= -hh - pad && ry <= hh + pad;
+}
+
+function hitTest(canvasX, canvasY) {
+  const [cmx, cmy] = pxToCm(canvasX, canvasY);
+  if (pointInLSofa(cmx, cmy)) return 'sofa';
+  if (pointInRect(cmx, cmy, S.table)) return 'table';
+  if (pointInRect(cmx, cmy, S.ct)) return 'ct';
+  return null;
+}
+
+function clampFurniture() {
+  const rw = S.room.w, rh = S.room.h;
+  for (const key of ['sofa', 'table', 'ct']) {
+    const obj = S[key];
+    let bw, bh;
+    if (key === 'sofa') {
+      const bb = sofaBBox();
+      bw = bb.w; bh = bb.h;
+    } else {
+      const bb = rectBBox(obj);
+      bw = bb.w; bh = bb.h;
+    }
+    obj.cx = Math.max(bw / 2 + 2, Math.min(rw - bw / 2 - 2, obj.cx));
+    obj.cy = Math.max(bh / 2 + 2, Math.min(rh - bh / 2 - 2, obj.cy));
+  }
+}
+
+canvas.addEventListener('pointerdown', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  const hit = hitTest(mx, my);
+  S.selected = hit;
+  if (hit) {
+    S.dragging = true;
+    const [cmx, cmy] = pxToCm(mx, my);
+    S.dragOff = { x: cmx - S[hit].cx, y: cmy - S[hit].cy };
+    canvas.setPointerCapture(e.pointerId);
+  }
+  render();
+});
+
+canvas.addEventListener('pointermove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  if (S.dragging && S.selected) {
+    const [cmx, cmy] = pxToCm(mx, my);
+    S[S.selected].cx = cmx - S.dragOff.x;
+    S[S.selected].cy = cmy - S.dragOff.y;
+    clampFurniture();
+    canvas.style.cursor = 'grabbing';
+    render();
+  } else {
+    const hit = hitTest(mx, my);
+    S.hover = hit;
+    canvas.style.cursor = hit ? 'grab' : 'default';
+    render();
+  }
+});
+
+canvas.addEventListener('pointerup', () => {
+  S.dragging = false;
+  canvas.style.cursor = S.hover ? 'grab' : 'default';
+});
+
+document.addEventListener('keydown', e => {
+  if (!S.selected) return;
+  const step = e.shiftKey ? 10 : 2;
+  const obj = S[S.selected];
+  switch (e.key) {
+    case 'ArrowLeft': obj.cx -= step; e.preventDefault(); break;
+    case 'ArrowRight': obj.cx += step; e.preventDefault(); break;
+    case 'ArrowUp': obj.cy -= step; e.preventDefault(); break;
+    case 'ArrowDown': obj.cy += step; e.preventDefault(); break;
+    case 'r': case 'R': rotateFurniture(S.selected); return;
+    case 'm': case 'M': if (S.selected === 'sofa') { mirrorSofa(); return; } break;
+    case 'Escape': S.selected = null; render(); return;
+    default: return;
+  }
+  clampFurniture();
+  render();
+});
+
+function rotateFurniture(key) {
+  S[key].rot = (S[key].rot + 1) % 4;
+  clampFurniture();
+  render();
+}
+
+function mirrorSofa() {
+  S.sofa.mirror = !S.sofa.mirror;
+  render();
+}
+
+function updateSelInfo() {
+  if (!S.selected) { selInfo.classList.remove('show'); return; }
+  selInfo.classList.add('show');
+  const obj = S[S.selected];
+  const names = { sofa: 'Canapé en L', table: 'Table SAM', ct: 'Table Basse' };
+  const distL = Math.round(obj.cx - (S.selected === 'sofa' ? sofaBBox().w / 2 : rectBBox(obj).w / 2));
+  const distT = Math.round(obj.cy - (S.selected === 'sofa' ? sofaBBox().h / 2 : rectBBox(obj).h / 2));
+  const distR = Math.round(S.room.w - obj.cx - (S.selected === 'sofa' ? sofaBBox().w / 2 : rectBBox(obj).w / 2));
+  const distB = Math.round(S.room.h - obj.cy - (S.selected === 'sofa' ? sofaBBox().h / 2 : rectBBox(obj).h / 2));
+  selInfo.innerHTML = `<b>${names[S.selected]}</b> — ` +
+    `↤ ${distL}cm &nbsp; ↥ ${distT}cm &nbsp; ↦ ${distR}cm &nbsp; ↧ ${distB}cm`;
+}
+
+function bindControl(id, getter, setter, formatter) {
+  const el = $(id);
+  const val = $(id + '-v');
+  el.addEventListener('input', () => {
+    setter(+el.value);
+    val.textContent = formatter(+el.value);
+    clampFurniture();
+    render();
+  });
+  el.value = getter();
+  val.textContent = formatter(getter());
+}
+
+function initControls() {
+  bindControl('room-w', () => S.room.w, v => S.room.w = v, v => (v / 100).toFixed(2) + ' m');
+  bindControl('room-h', () => S.room.h, v => S.room.h = v, v => (v / 100).toFixed(2) + ' m');
+  bindControl('sofa-long', () => S.sofa.longArm, v => S.sofa.longArm = v, v => v + ' cm');
+  bindControl('sofa-short', () => S.sofa.shortArm, v => S.sofa.shortArm = v, v => v + ' cm');
+  bindControl('sofa-depth', () => S.sofa.depth, v => S.sofa.depth = v, v => v + ' cm');
+  bindControl('table-w', () => S.table.w, v => S.table.w = v, v => v + ' cm');
+  bindControl('table-h', () => S.table.h, v => S.table.h = v, v => v + ' cm');
+  bindControl('table-chairs', () => S.table.chairs, v => S.table.chairs = v, v => '' + v);
+  bindControl('ct-w', () => S.ct.w, v => S.ct.w = v, v => v + ' cm');
+  bindControl('ct-h', () => S.ct.h, v => S.ct.h = v, v => v + ' cm');
+
+  $('opt-grid').addEventListener('change', e => { S.showGrid = e.target.checked; render(); });
+  $('opt-dims').addEventListener('change', e => { S.showDims = e.target.checked; render(); });
+}
+
+function syncControlsToState() {
+  $('room-w').value = S.room.w; $('room-w-v').textContent = (S.room.w / 100).toFixed(2) + ' m';
+  $('room-h').value = S.room.h; $('room-h-v').textContent = (S.room.h / 100).toFixed(2) + ' m';
+  $('sofa-long').value = S.sofa.longArm; $('sofa-long-v').textContent = S.sofa.longArm + ' cm';
+  $('sofa-short').value = S.sofa.shortArm; $('sofa-short-v').textContent = S.sofa.shortArm + ' cm';
+  $('sofa-depth').value = S.sofa.depth; $('sofa-depth-v').textContent = S.sofa.depth + ' cm';
+  $('table-w').value = S.table.w; $('table-w-v').textContent = S.table.w + ' cm';
+  $('table-h').value = S.table.h; $('table-h-v').textContent = S.table.h + ' cm';
+  $('table-chairs').value = S.table.chairs; $('table-chairs-v').textContent = S.table.chairs;
+  $('ct-w').value = S.ct.w; $('ct-w-v').textContent = S.ct.w + ' cm';
+  $('ct-h').value = S.ct.h; $('ct-h-v').textContent = S.ct.h + ' cm';
+  $('opt-grid').checked = S.showGrid;
+  $('opt-dims').checked = S.showDims;
+}
+
+function resetAll() {
+  const d = defaults();
+  Object.assign(S, d);
+  syncControlsToState();
+  render();
+}
+
+window.addEventListener('resize', render);
+initControls();
+render();
+</script>
 </body>
 </html>
