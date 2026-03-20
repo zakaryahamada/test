@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Séjour - Disposition Salon + SAM</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f5f5f5;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  .container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #555;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-color {
+    width: 18px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Plan Séjour 4.82 × 5.13 m</h2>
+  <p class="subtitle">Disposition Salon en L + Salle à Manger 6 places</p>
+
+  <svg width="640" height="720" viewBox="0 0 640 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="6" stroke="#ccc" stroke-width="1"/>
+      </pattern>
+      <filter id="shadow" x="-4%" y="-4%" width="108%" height="108%">
+        <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.12"/>
+      </filter>
+    </defs>
+
+    <!-- Scale: 1m = ~105px (5.13m -> ~540px width, 4.82m -> ~506px height) -->
+    <!-- Room offset: x=60, y=60 -->
+    <!-- Room interior: 540 x 506 -->
+
+    <!-- Floor -->
+    <rect x="60" y="60" width="540" height="506" fill="#fafaf7" stroke="none"/>
+
+    <!-- Walls (thick) -->
+    <rect x="50" y="50" width="560" height="526" fill="none" stroke="#333" stroke-width="10" rx="2"/>
+
+    <!-- Dimensions extérieures -->
+    <!-- Largeur 5.13m en haut -->
+    <line x1="60" y1="35" x2="600" y2="35" stroke="#999" stroke-width="1"/>
+    <line x1="60" y1="30" x2="60" y2="40" stroke="#999" stroke-width="1"/>
+    <line x1="600" y1="30" x2="600" y2="40" stroke="#999" stroke-width="1"/>
+    <text x="330" y="28" text-anchor="middle" font-size="13" fill="#666">5.13 m</text>
+
+    <!-- Hauteur 4.82m à droite -->
+    <line x1="618" y1="60" x2="618" y2="566" stroke="#999" stroke-width="1"/>
+    <line x1="613" y1="60" x2="623" y2="60" stroke="#999" stroke-width="1"/>
+    <line x1="613" y1="566" x2="623" y2="566" stroke="#999" stroke-width="1"/>
+    <text x="635" y="318" text-anchor="middle" font-size="13" fill="#666" transform="rotate(90,635,318)">4.82 m</text>
+
+    <!-- ===== OUVERTURES ===== -->
+
+    <!-- Baie vitrée (mur gauche, milieu-haut) -->
+    <rect x="46" y="140" width="18" height="160" fill="#a8dce8" stroke="#5bb8d4" stroke-width="2" rx="2"/>
+    <text x="28" y="225" text-anchor="middle" font-size="11" fill="#3a8fa3" transform="rotate(-90,28,225)">Baie vitrée</text>
+
+    <!-- Branchement TV (mur haut) -->
+    <rect x="250" y="50" width="160" height="8" fill="#e8c840" stroke="#c4a830" stroke-width="1" rx="2"/>
+    <text x="330" y="46" text-anchor="middle" font-size="11" fill="#998520">Branchement TV</text>
+
+    <!-- Entrée principale (mur bas, centre-gauche) -->
+    <rect x="195" y="568" width="100" height="12" fill="white" stroke="#333" stroke-width="2"/>
+    <!-- Arc de porte -->
+    <path d="M 195 575 Q 195 635, 255 635" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="245" y="600" text-anchor="middle" font-size="11" fill="#666">Entrée principale</text>
+
+    <!-- Porte cuisine (mur bas gauche) -->
+    <rect x="60" y="530" width="70" height="12" fill="white" stroke="#333" stroke-width="2"/>
+    <path d="M 60 540 Q 60 590, 110 590" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="95" y="560" text-anchor="middle" font-size="10" fill="#666">Porte cuisine</text>
+
+    <!-- Couloir (mur bas droite) -->
+    <rect x="370" y="568" width="230" height="12" fill="url(#hatch)" stroke="#333" stroke-width="1"/>
+    <text x="485" y="560" text-anchor="middle" font-size="11" fill="#888">Couloir</text>
+
+    <!-- Hall -->
+    <text x="155" y="500" text-anchor="middle" font-size="12" fill="#aaa">Hall</text>
+
+    <!-- ===== MEUBLES ===== -->
+
+    <!-- === MEUBLE TV === -->
+    <rect x="230" y="62" width="200" height="40" rx="4" fill="#8B7355" stroke="#6b5535" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="330" y="86" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Meuble TV</text>
+    <!-- TV -->
+    <rect x="260" y="66" width="140" height="6" rx="2" fill="#333"/>
+
+    <!-- === CANAPÉ EN L === -->
+    <!-- Grande assise (parallèle mur droit) -->
+    <rect x="390" y="130" width="90" height="230" rx="8" fill="#5B8C6E" stroke="#3d6b4e" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Coussins dossier grande assise -->
+    <rect x="455" y="140" width="18" height="65" rx="4" fill="#4a7a5c"/>
+    <rect x="455" y="215" width="18" height="65" rx="4" fill="#4a7a5c"/>
+    <rect x="455" y="290" width="18" height="60" rx="4" fill="#4a7a5c"/>
+    <!-- Coussins assise -->
+    <rect x="398" y="140" width="50" height="100" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
+    <rect x="398" y="248" width="50" height="100" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
+
+    <!-- Retour du L (vers le centre) -->
+    <rect x="240" y="270" width="158" height="90" rx="8" fill="#5B8C6E" stroke="#3d6b4e" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- Coussins dossier retour -->
+    <rect x="250" y="335" width="60" height="18" rx="4" fill="#4a7a5c"/>
+    <rect x="320" y="335" width="60" height="18" rx="4" fill="#4a7a5c"/>
+    <!-- Coussin assise retour -->
+    <rect x="250" y="278" width="55" height="50" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
+    <rect x="313" y="278" width="55" height="50" rx="4" fill="#6a9e7e" stroke="#5B8C6E" stroke-width="1"/>
+
+    <!-- Label canapé -->
+    <text x="370" y="210" text-anchor="middle" font-size="13" fill="white" font-weight="bold" transform="rotate(-90,420,210)">Canapé</text>
+    <text x="320" y="315" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Retour L</text>
+
+    <!-- === TABLE BASSE === -->
+    <rect x="280" y="170" width="90" height="55" rx="6" fill="#C4A265" stroke="#a88945" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="325" y="202" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Table basse</text>
+
+    <!-- === TAPIS sous salon === -->
+    <rect x="220" y="120" width="280" height="260" rx="6" fill="none" stroke="#c0a87e" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.6"/>
+    <text x="230" y="375" font-size="10" fill="#b89e6e" font-style="italic">Tapis</text>
+
+    <!-- === TABLE À MANGER === -->
+    <rect x="100" y="400" width="170" height="90" rx="6" fill="#A0522D" stroke="#7a3e1f" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="185" y="450" text-anchor="middle" font-size="13" fill="white" font-weight="bold">Table SAM</text>
+    <text x="185" y="466" text-anchor="middle" font-size="10" fill="#f0d8c0">160 × 90 cm</text>
+
+    <!-- Chaises (6 au total) -->
+    <!-- Chaise haut gauche -->
+    <rect x="125" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+    <!-- Chaise haut milieu -->
+    <rect x="170" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+    <!-- Chaise haut droite -->
+    <rect x="215" y="384" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+
+    <!-- Chaise bas gauche -->
+    <rect x="125" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+    <!-- Chaise bas milieu -->
+    <rect x="170" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+    <!-- Chaise bas droite -->
+    <rect x="215" y="492" width="30" height="14" rx="4" fill="#D2691E" stroke="#a04e15" stroke-width="1"/>
+
+    <!-- Labels chaises -->
+    <text x="185" y="380" text-anchor="middle" font-size="9" fill="#a04e15">○ ○ ○</text>
+    <text x="185" y="518" text-anchor="middle" font-size="9" fill="#a04e15">○ ○ ○</text>
+
+    <!-- === FLUX DE CIRCULATION (flèches) === -->
+    <path d="M 245 575 L 245 520 Q 245 505, 260 505 L 380 505 Q 395 505, 395 490 L 395 400"
+          fill="none" stroke="#ddd" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowhead)"/>
+
+    <defs>
+      <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#ccc"/>
+      </marker>
+    </defs>
+
+    <!-- Circulation label -->
+    <text x="340" y="495" text-anchor="middle" font-size="9" fill="#bbb" font-style="italic">circulation</text>
+
+    <!-- Flèche lumière baie vitrée -->
+    <line x1="68" y1="180" x2="130" y2="180" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#sunArrow)"/>
+    <line x1="68" y1="210" x2="150" y2="210" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <line x1="68" y1="240" x2="140" y2="240" stroke="#e8c840" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="110" y="265" font-size="9" fill="#c4a830" font-style="italic">lumière ☀</text>
+
+    <defs>
+      <marker id="sunArrow" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+        <polygon points="0 0, 6 2.5, 0 5" fill="#e8c840"/>
+      </marker>
+    </defs>
+
+    <!-- === COTES INTÉRIEURES meubles === -->
+    <!-- Distance canapé - mur droit ~60cm -->
+    <line x1="482" y1="150" x2="540" y2="150" stroke="#aaa" stroke-width="0.8"/>
+    <text x="510" y="145" text-anchor="middle" font-size="9" fill="#999">~60cm</text>
+
+    <!-- Distance table - porte cuisine -->
+    <line x1="100" y1="495" x2="100" y2="535" stroke="#aaa" stroke-width="0.8"/>
+    <text x="86" y="520" text-anchor="middle" font-size="9" fill="#999" transform="rotate(-90,86,520)">~80cm</text>
+
+  </svg>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color" style="background:#5B8C6E"></div>
+      <span>Canapé en L</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#C4A265"></div>
+      <span>Table basse</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#A0522D"></div>
+      <span>Table SAM (160×90)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#D2691E"></div>
+      <span>Chaises (×6)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#a8dce8"></div>
+      <span>Baie vitrée</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background:#e8c840"></div>
+      <span>Branchement TV</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
